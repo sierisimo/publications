@@ -1,40 +1,59 @@
 # Unit testing with JUnit
 
-I already explained that [writing tests is not that hard](https://dev.to/sierisimo/testing-is-not-that-hard-54e7) but I got some comments about it… I can resume those comments in just one:
+I already explained that [writing tests is not that hard](https://dev.to/sierisimo/testing-is-not-that-hard-54e7) 
+but I got some comments about it… I can resume those comments in just one:
 
 > Where are the code examples?
 
 So this time I will focus more in the code part with some simple examples.
 
-Note: I won't follow a TDD, BDD or any specific methodology thing for this article. I want to explain how to think tests and how to write them at a first approach. Also worth to mention once more: I'll be providing most of the code in Kotlin for JVM, the concepts still applies for other tech.
+Note: I won't follow a TDD, BDD or any specific methodology thing for this article. 
+I want to explain how to think tests and how to write them at a first approach. Also 
+worth to mention once more: I'll be providing most of the code in Kotlin for JVM, 
+the concepts still applies for other tech.
 
 ## Unit Tests
 
-When you write code you want to see it working, you want to see that magic formed in your mind working in the computer, you want to corroborate everything is ready for the next steps in you TURBO-SUPER-MEGA-AWESOME-PROJECT. But running the whole thing every single time, doing a compilation of the whole dependent code, passing previous screens/steps to arrive in the part you want to test, or simply adding one thousand _logs_ as part of the process to check everything works is annoying and takes a lot of time. Also, you need to do this for every big change (or even smaller changes) to validate this new thing doesn't break other stuff. 
+When you write code you want to see it working, you want to see that magic formed 
+in your mind working in the computer, you want to corroborate everything is ready 
+for the next steps in you TURBO-SUPER-MEGA-AWESOME-PROJECT. But running the whole 
+thing every single time, doing a compilation of the whole dependent code, passing 
+previous screens/steps to arrive in the part you want to test, or simply adding 
+one thousand _logs_ as part of the process to check everything works is annoying 
+and takes a lot of time. Also, you need to do this for every big change (or even 
+smaller changes) to validate this new thing doesn't break other stuff. 
 
-Writing Unit tests can save you from this. A unit test is a single test that validates the smallest part of a system. It generally doesn't require too much setup and it is easy to read. Doing a unit test involves checking that one single functionality works as expected for both good cases and bad cases.
+Writing Unit tests can save you from this. A unit test is a single test that 
+validates the smallest part of a system. It generally doesn't require too much 
+setup and it is easy to read. Doing a unit test involves checking that one single 
+functionality works as expected for both good cases and bad cases.
 
 Let's begin with a simple (and classic) example: **FizzBuzz**.
 
 The rules for FizzBuzz are quite simple:
 
-> A group of children are counting numbers, they go in turns and say something depending on the number they got:
+> A group of children are counting numbers, they go in turns and say something 
+depending on the number they got:
 >
 > 1. When number is multiple of 3 they should say "Fizz" instead of the number
 >
 > 2. When number is multiple of 5 they should say "Buzz" instead of the number
 >
-> 3. When number is both multiple of 3 and 5 they should say "FizzBuzz" instead of the number
+> 3. When number is both multiple of 3 and 5 they should say "FizzBuzz" instead 
+of the number
 >
 > 4. Otherwise the just say the number
 
-These rules seem easy and fun, so how does it goes for our code? Well, we decided to go for a simple function:
+These rules seem easy and fun, so how does it goes for our code? Well, we decided 
+to go for a simple function:
 
 ```kotlin
 fun fizzBuzz(countUntil: Int): List<String>
 ```
 
-This function will work correctly every single element of the FizzBuzz game and give us back the results. To keep the focus in the tests I removed the body of this function. 
+This function will work correctly every single element of the FizzBuzz game and 
+give us back the results. To keep the focus in the tests I removed the body of 
+this function. 
 
 ### Our setup
 
@@ -42,15 +61,21 @@ Imagine that the previous function is located at filesystem in: `project/src/mai
 
 Then our tests will be at: `project/src/test/kotlin/net/sierisio/games/FizzBuzzTest.kt`
 
-This follows the standard of Java and that's what Kotlin suggests on the official docs.
+This follows the standard of Java and that's what Kotlin suggests on the 
+official docs.
 
-We are going to use JUnit 5 for our tests, so you should check the [official docs](https://junit.org/junit5/docs/current/user-guide/) if something's missing on this article. The only thing you need to know by now is that JUnit is a tool for running test frameworks on the JVM. It will help us to run our tests and do some checks.
+We are going to use JUnit 5 for our tests, so you should check the [official 
+docs](https://junit.org/junit5/docs/current/user-guide/) if something's missing 
+on this article. The only thing you need to know by now is that JUnit is a tool 
+for running test frameworks on the JVM. It will help us to run our tests and do 
+some checks.
 
 Let's write our tests cases!
 
 ## Valid cases
 
-First of all we need to focus on valid cases to check the function works as expected (quotes added to represent they are Strings):
+First of all we need to focus on valid cases to check the function works as 
+expected (quotes added to represent they are Strings):
 
 1. When we pass the number 1 we should get back: `["1"]`
 2. When we pass the number 3 we should get back: `["1","2","Fizz"]`
@@ -59,7 +84,8 @@ First of all we need to focus on valid cases to check the function works as expe
 
 This list can go on and on. For now we are going to stay with this four cases. 
 
-The first thing is to create a class that will hold our tests and set some methods on it to represent our valid cases:
+The first thing is to create a class that will hold our tests and set some 
+methods on it to represent our valid cases:
 
 ```kotlin
 import org.junit.jupiter.api.Test
@@ -89,10 +115,12 @@ class FizzBuzzTest {
 
 Things you can notice in this class:
 
-- The annotation `@Test` before each method. This tells JUnit which methods are test cases and should run individually.
+- The annotation `@Test` before each method. This tells JUnit which methods are 
+test cases and should run individually.
 - Names are longer and descriptive
 
-There's also the chance in Kotlin along with JUnit 5 to use the **backtick** notation for method names:
+There's also the chance in Kotlin along with JUnit 5 to use the **backtick** 
+notation for method names:
 
 ```kotlin
 internal class FizzBuzzTest {
@@ -103,7 +131,8 @@ internal class FizzBuzzTest {
 }
 ```
 
-Or if the names in this notation aren't what you like, you can also just use an annotation to put a fancy name on the test report:
+Or if the names in this notation aren't what you like, you can also just use an 
+annotation to put a fancy name on the test report:
 
 ```kotlin
 @DisplayName("when 3 is passed the last item is 'Fizz'")
@@ -113,7 +142,8 @@ fun whenWePass3TheLastItemIsFizz(){
 }
 ```
 
-The style depends on you and there's even ways to make the displaying more fancy or complex.
+The style depends on you and there's even ways to make the displaying more fancy 
+or complex.
 
 Once we have the tests, let's say what parts are involved in each one.
 
@@ -145,9 +175,12 @@ fun when1IsPassedASingleItemListIsReturned() {
  }
 ```
 
-If you run this on IntelliJ/Android Studio or with Gradle/Maven you will notice if your function is working.
+If you run this on IntelliJ/Android Studio or with Gradle/Maven you will notice 
+if your function is working.
 
-The assertions like `assertEquals` and `assertTrue` are included with JUnit 5 but you can search the internet for other assertion libraries that include a more versatile and variant set of assertion (like [AssertJ](http://joel-costigliola.github.io/assertj/))
+The assertions like `assertEquals` and `assertTrue` are included with JUnit 5 
+but you can search the internet for other assertion libraries that include a 
+more versatile and variant set of assertion (like [AssertJ](http://joel-costigliola.github.io/assertj/))
 
 Here's a simple example of how the class can end with the tests:
 
@@ -213,16 +246,21 @@ internal class FizzBuzzTest {
 
 ## Invalid Cases
 
-Testing for the happy path is great and shows the function works correctly, but we know users don't work like that. They don't follow the happy path, they always try to break our stuff and they send weird stuff to our code. 
+Testing for the happy path is great and shows the function works correctly, but 
+we know users don't work like that. They don't follow the happy path, they 
+always try to break our stuff and they send weird stuff to our code. 
 
-The best thing we can do is write also tests for invalid cases. The first ones that comes to my mind are:
+The best thing we can do is write also tests for invalid cases. The first ones 
+that comes to my mind are:
 
 1. Zero is not a valid parameter and the function should return an empty list: `[]`
 2. Negative numbers are not valid parameters and function should return empty list: `[]`
 
-> Optional for other languages: Checking the data type is correct is also worth to test. In the case of Kotlin there's no need because this is checked at compile time.
+> Optional for other languages: Checking the data type is correct is also worth 
+to test. In the case of Kotlin there's no need because this is checked at compile time.
 
-This two cases are quite easy and we can even put them in a single test (and introduce new annotations):
+This two cases are quite easy and we can even put them in a single test (and 
+introduce new annotations):
 
 ```kotlin
 @ParameterizedTest
@@ -234,14 +272,23 @@ fun whenLimitIsLessOrEqualThanZeroReturnsEmptyList(limit: Int) {
 }
 ```
 
-`@ParameterizedTest` allows the test to be executed multiple times passing the values it found in `@ValueSource` individually to the test method. The test method then needs to take one parameter. 
+`@ParameterizedTest` allows the test to be executed multiple times passing the 
+values it found in `@ValueSource` individually to the test method. The test 
+method then needs to take one parameter. 
 
-One big advantage of this kind of test is that we are able know to test all the invalid test cases we want with a single method and if a new case that behaves in the same way is needed we can just add it in the `@ValueSource`.
+One big advantage of this kind of test is that we are able know to test all the 
+invalid test cases we want with a single method and if a new case that behaves 
+in the same way is needed we can just add it in the `@ValueSource`.
 
 ---
 
 ## Conclusion
 
-This is just a simple introduction on how to write unit tests for a single function, things could get more complex when we need to pass more complex data or we need to test other kind of elements,  but still we see that _testing is not that hard_ and we can easy validate the code we work. If you are interested in the final test class it's available [here along with the markdown of this article](https://gist.github.com/sierisimo/a6db59570f606e487f6602b1eba329b4).
+This is just a simple introduction on how to write unit tests for a single 
+function, things could get more complex when we need to pass more complex data 
+or we need to test other kind of elements,  but still we see that _testing is 
+not that hard_ and we can easy validate the code we work. If you are interested 
+in the final test class it's available [here along with the markdown of this 
+article](https://gist.github.com/sierisimo/a6db59570f606e487f6602b1eba329b4).
 
 Once more: thanks for reading!
