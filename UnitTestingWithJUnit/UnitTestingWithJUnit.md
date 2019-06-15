@@ -114,7 +114,7 @@ fun whenWePass3TheLastItemIsFizz(){
 }
 ```
 
-The style depends on you and there's even ways to make the displaying more fancy 
+The style depends on you and there are even ways to make the displaying more fancy 
 or complex.
 
 Once we have the tests, let's say what parts are involved in each one.
