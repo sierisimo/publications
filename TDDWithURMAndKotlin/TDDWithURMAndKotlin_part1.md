@@ -36,7 +36,7 @@ The whole process for getting into TDD works differently for each person, and on
 
 ## Project and setup
 
-The project is a simple implementation of a working URM. The goal is to write a project cabaple of executing files in the URM notation:
+The project is a simple implementation of a working URM. The goal is to write a project capable of executing files in the URM notation:
 
 ```
 X: []
@@ -47,7 +47,7 @@ X: []
 4: J(2,5, 7)
 ```
 
-As mentioned before, I'll be using Kotlin in the JVM flavor along with JUnit 5. I will also be using gradle as the task runner and build tool. The final project can be found in this Github project:
+As mentioned before, I'll be using Kotlin in the JVM flavor along with JUnit 5. I will also be using gradle as the task runner and build tool. The final project can be found in [this Github project](https://github.com/sierisimo/publications/tree/master/TDDWithURMAndKotlin/kurm)
 
 ## Zero function
 
