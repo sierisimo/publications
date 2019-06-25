@@ -125,7 +125,7 @@ This allow the test to be more dynamic and we can add more cases having more fle
 Let's write one test mixing what we learned:
 
 ```kotlin
- @ParameterizedTest
+@ParameterizedTest
 @CsvSource("10,23,24", "15,99,100", "1000,1000,1001")
 fun `check zero and increment can work together`(
     position: Int,
