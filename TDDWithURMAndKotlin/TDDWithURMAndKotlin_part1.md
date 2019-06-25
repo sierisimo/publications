@@ -1,6 +1,6 @@
 # TDD With URM and Kotlin
 
-In one of my previous articles I talked about URM and how it works. In another I mentioned about test cases and how to keep ideas for a simple function. Now it's time to wrap up with TDD.
+In one of my previous articles [I wrote about URM](https://dev.to/sierisimo/my-favorite-computer-theory-to-create-examples-15cn) and how it works. In another [I mentioned about test cases](https://dev.to/sierisimo/unit-testing-with-junit-3mcd) and how to keep ideas for a simple function. Now it's time to wrap up with TDD.
 
 First of all…
 
