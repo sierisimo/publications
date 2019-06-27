@@ -311,7 +311,7 @@ fun `zero function throws exception with negative position`(position: Int) {
 }
 ```
 
-We alse take advantage of Kotlin support for function names with spaces using backticks to remove the `@DisplayName` and put directly the name in the function. And we can test our function just adding the values we want into `@ValueSource(ints = [])` without writing more test cases.
+We also take advantage of **_Kotlin_** support for function names with spaces using backticks to remove the `@DisplayName` and put directly the name in the function. And we can test our function just adding the values we want into `@ValueSource(ints = [])` without writing more test cases.
 
 ---
 
