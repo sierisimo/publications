@@ -6,11 +6,11 @@ First of all…
 
 ## What's TDD?
 
-**TDD** is the acronym for _Testing Driven Development_. It works as a technique for building software based on also writing the tests for the given software.
+**TDD** is the acronym for _Testing Driven Development_. It works as a technique for building software based on writing the tests for the given software.
 
-It's worth to mention this technique doesn't solves all the problems but allows you to identify problems before they get too messy. Also it's a different way of writing code which means probably it won't make total sense at first sight or won't stick too much with you. I think that once you get used to the process it easy to just flow with it.
+It's worth to mention this technique does not solve all the problems it allows you to identify problems before they get too messy. Also, it's a different way of writing code, which means probably it won't make total sense at first sight or won't stick too much with you. I think that once you get used to the process it's easy to just flow with it.
 
-Some friends have told me about delivery times and the issue of TDD taking longer than just throwing a lot of code, one argument about this is that something breaks in the future and you don't have the tests for it, you would end up taking the same time fixing that as if you have taken the time to do TDD since the begining. Still I think is worth the effort to learn why is so popular and try at least once (where once is a period of time bigger than 1 day).
+Some friends complain about delivery times and the issue of TDD taking longer than just throwing a lot of code, one argument about this is that if something breaks in the future and you don't have the tests for it, you would end up taking the same time fixing that as if you have taken the time to do TDD since the beginning. Still I think is worth the effort to learn why is so popular and try at least once —where once is a period of time bigger than 1 day.
 
 TDD has only three rules to follow:
 
@@ -24,13 +24,13 @@ With these three rules you can follow TDD kind of easy. The whole process involv
 2. QA/Tester/Someone with partial knowledge of the design of the software
 3. The actual developer
 
-This means you'll be in a loop following the rules along with changing the current mindset. The whole process is something like:
+This means you'll be in a loop following the rules along with changing the current mindset. The whole process you would get use to, is here:
 
-1. How I would like to use this code from outside of the code? I would like to have a way to pass a callback or I will get a value from the call? Which dependencies are needed before the actual call to the code?
+1. How I would like to use this code from outside of the code? Would I like to have a way to pass a callback or would I get a value from the call? Which dependencies are needed before the actual call to the code?
 2. Let's write code for validating that the response will work and that the value is returned/sent as it should be
 3. Let's write the actual code
 4. Refactor some names
-5. Repeat from 1 if I need to change something
+5. Repeat from step 1 if I need to change something
 
 The whole process for getting into TDD works differently for each person, and on daily basis when you're facing tight deadlines is also difficult to get used to it. Still, I insist: worths the try.
 
@@ -47,13 +47,13 @@ X: []
 4: J(2,5, 7)
 ```
 
-As mentioned before, I'll be using Kotlin in the JVM flavor along with JUnit 5. I will also be using gradle as the task runner and build tool. The final project can be found in [this Github project](https://github.com/sierisimo/publications/tree/master/TDDWithURMAndKotlin/kurm)
+As mentioned before, I'll be using **_Kotlin_** in the JVM flavor along with **_JUnit 5_**. I will also be using **_Gradle_** as the task runner and build tool. The final project can be found in [this Github project](https://github.com/sierisimo/publications/tree/master/TDDWithURMAndKotlin/kurm)
 
 ## Zero function
 
 The first thing we are going to build is the operations for the URM machine to work, this is the easiest part because we don't have to worry about the internals of the _registers_ or the parsing process.
 
-The `Z(x)` function will be our first feature to write. The function will take a number that represent a register position and will put a zero on it. We will build this function to be invoked in our code, it should be easy right? Well… I have some questions:
+The `Z(x)` function will be our first feature to write. The function will take a number that represent a register position and will put a zero on it. We will build this function to be invoked in our code, it should be easy, right? Well… I have some questions:
 
 * Should the function be part of each register like: `register.zero()`?
   * I dislike this idea, the registers should only now how to store a value, nothing else
@@ -132,7 +132,7 @@ As we can see, we have a compilation error…
 
 > DUH! THAT'S OBVIUOS BECAUSE YOU DIDN'T CREATE THAT FUNCTION, IS A VERY SIMPLE FUNCTION YOU DUMB…
 
-Hey, wait a minute… before saying that you should remember the rules of TDD:
+Hey! Wait a minute… before saying that you should remember the rules of TDD:
 
 1. You are not allowed to write any production code unless it is to make a failing unit test pass
 2. You are not allowed to write any more of a unit test than is sufficient to fail; and **compilation failures are failures**
@@ -176,7 +176,7 @@ fun zero(registry: ?, position: Int){
 
 I left something in the function… what's the type of `registry`? Is an array? I don't think so, our program is the "_**Unlimited** Register Machine_", and arrays have a limit size. Is it a list? Could be, as long as the list is initialized or has a way to grow to certain size to hold empty slots. The real question is: what functionality does the registry has? well, it should be able to retrieve the value of a register in a given position and set the value of a register in a given position. Then a list could work but still has the issue with empty slots.
 
-We decide that, in this precise moment, we don't care about how the registry works, and because we don't care about how it works as long as it works we can create a definition for that:
+We decide that, in this precise moment, we don't care about how the registry works, and because we don't care about how it works —as long as it works— we can create a definition for that:
 
 ```kotlin
 interface Registry {
@@ -194,7 +194,7 @@ fun zero(registry: Registry, position: Int) {
 }
 ```
 
-Because we don't care about the details of the registry itself we create an implementation on the test:
+Since we don't care about the details of the registry itself, we can create an implementation on the test:
 
 ```kotlin
 internal class OperationsTest {
@@ -274,7 +274,7 @@ fun zeroFunctionThrowsExceptionWithNegativePosition() {
 }
 ```
 
-In this test we check that our function don't work with negative positions. But also we state in the test we expect the function to _throw_ an `IllegalArgumentException`. If we run the `gradle check` we will se this test is not passing, but the previous one is.
+In this test we check that our function don't work with negative positions. But also we said in the test we expect the function to _throw_ an `IllegalArgumentException`. If we run the `gradle check` we will see this test is not passing, but the previous one is.
 
 We fix the `zero` function adding Kotlin contracts:
 
@@ -317,7 +317,7 @@ We alse take advantage of Kotlin support for function names with spaces using ba
 
 ## Conclusion
 
-For now we understand the basics of following the process of _design-test-check-fix-repeat_ loop of TDD. All of this with a simple function.
+For now, we have understood/learned the basics of following the process of _design-test-check-fix-repeat_ loop of TDD. All of this with a simple function.
 
 There's still too much to do, like creating tests for the other functions (`increment`, `jump`) but we are gonna take that for the next article.
 
