@@ -247,3 +247,5 @@ One big advantage of this kind of test is that we are now able to test all the i
 This is just a simple introduction on how to write unit tests for a single function, things could get more complex when we need to pass more complex data or we need to test other kind of elements, but we can still see that _testing is not that hard_ and we can easily validate the code we work with. If you are interested in the final test class it's available [here, along with the markdown of this article](https://gist.github.com/sierisimo/a6db59570f606e487f6602b1eba329b4).
 
 Once more: Thanks for reading!
+
+(And special thanks to [Jhoon Saravia](https://github.com/jhoon) and [Alejandro Tellez](https://github.com/gambit135) for helping me with grammar and typos) 
