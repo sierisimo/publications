@@ -240,7 +240,7 @@ net.sierisimo.kurm.operations.OperationsTest > zero function should set a 0 in p
 FAILURE: Build failed with an exception.
 ```
 
-Which means the project successfully compiled but our test did not pass. And we know that we currently don't have a body in the test, let's fix that:
+Which means the project successfully compiled but our test did not pass. And we know that we currently don't have a body in our function, let's fix that:
 
 ```kotlin
 fun zero(registry: Registry, position: Int) {
