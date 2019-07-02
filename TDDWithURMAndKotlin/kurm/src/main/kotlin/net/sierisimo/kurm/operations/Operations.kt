@@ -1,5 +1,6 @@
 package net.sierisimo.kurm.operations
 
+import net.sierisimo.kurm.InstructionSet
 import net.sierisimo.kurm.Registry
 
 /**
@@ -33,4 +34,11 @@ fun increment(registry: Registry, position: Int) {
     checkNotNull(currentValue) { "Register must be initialized" }
 
     registry.setValueAtPosition(position, currentValue + 1)
+}
+
+/**
+ *
+ */
+fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: InstructionSet, instruction: Int) {
+    instructionSet.current = instruction
 }

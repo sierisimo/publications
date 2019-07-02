@@ -1,8 +1,10 @@
 package net.sierisimo.kurm.operations
 
+import net.sierisimo.kurm.InstructionSet
 import net.sierisimo.kurm.Registry
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -18,6 +20,8 @@ internal class OperationsTest {
             positionValueMap[position] = value
         }
     }
+
+    val instructionSet = InstructionSet()
 
     @ParameterizedTest
     @ValueSource(ints = [1, 5, 10, 1000, Int.MAX_VALUE])
@@ -93,5 +97,15 @@ internal class OperationsTest {
 
         increment(registry, position)
         assertEquals(1, registry.getValueAtPosition(position))
+    }
+
+    @Test
+    fun `jump function should move to instruction X when registries are equal`() {
+        zero(registry, 5)
+        zero(registry, 10)
+
+        jump(registry, 5, 10, instructionSet, 1)
+
+        assertEquals(1, instructionSet.current)
     }
 }
