@@ -2,8 +2,7 @@ package net.sierisimo.kurm.operations
 
 import net.sierisimo.kurm.InstructionSet
 import net.sierisimo.kurm.Registry
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -107,5 +106,47 @@ internal class OperationsTest {
         jump(registry, 5, 10, instructionSet, 1)
 
         assertEquals(1, instructionSet.current)
+    }
+
+    @Test
+    fun `jump function won't move to instruction X when registries are different`() {
+        //Setup
+        instructionSet.current = 3
+
+        zero(registry, 5)
+        zero(registry, 10)
+        increment(registry, 10)
+
+        jump(registry, 5, 10, instructionSet, 10)
+
+        //Assertions
+        assertNotEquals(10, instructionSet.current)
+        //If the jump function did not matched it should go in the next instruction
+        assertEquals(4, instructionSet.current)
+    }
+
+
+    @ParameterizedTest
+    @CsvSource("-10,23,2", "15,-99,100", "1000,1100,-1001", "-12,-13,5", "-17,23,-31", "19,-29,-37")
+    fun `jump function throws exception with negative positions`(positionX: Int, positionY: Int, instruction: Int) {
+        instructionSet.current = 9
+
+        assertThrows<IllegalArgumentException> {
+            jump(registry, positionX, positionY, instructionSet, instruction)
+        }
+
+        assertEquals(9, instructionSet.current)
+    }
+
+    @ParameterizedTest
+    @CsvSource("10,23", "15,99", "1000,1100", "12,13", "17,23", "19,29")
+    fun `jump function throws exception with empty registers`(positionX: Int, positionY: Int, instruction: Int) {
+        instructionSet.current = 9
+
+        assertThrows<IllegalStateException> {
+            jump(registry, positionX, positionY, instructionSet, instruction)
+        }
+
+        assertEquals(9, instructionSet.current)
     }
 }

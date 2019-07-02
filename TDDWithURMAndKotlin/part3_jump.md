@@ -119,4 +119,59 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: Ins
 }
 ```
 
-Easy peasy, now the test is passing!
+Easy peasy, now the test is passing! You can check by yourself. Please [go on this commit, which contains all of this code to this part and check it by yourself](https://github.com/sierisimo/publications/commit/929e3bb3dfff455fed5dccb51a2f716e5e43ebeb).
+
+At this point you probably are thinking I'm crazy, but I'm not. This is a fair thing happening on TDD, you created a test, you create code to pass the test, let's move on. No one said the implementation is right but the test is passing. We need to test deeper
+
+```kotlin
+@Test
+fun `jump function won't move to instruction X when registries are different`() {
+    //Setup
+    instructionSet.current = 3
+
+    zero(registry, 5)
+    zero(registry, 10)
+    increment(registry, 10)
+
+    jump(registry, 5, 10, instructionSet, 10)
+
+    //Assertions
+    assertNotEquals(10, instructionSet.current)
+    //If the jump function did not matched it should go in the next instruction
+    assertEquals(4, instructionSet.current)
+}
+```
+
+Now if we `check` the project we will get a failing test! This means our other test was right in the way we wrote it but the implementation of the function is actually wrong. Let's fix that.
+We need to validate that values at registers are equal, only then we update the postion on the `instructionSet`. Otherwise we should just continue execution on the next instruction. Adding the minimum to pass the test our test will pass again:
+
+```kotlin
+fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: InstructionSet, instruction: Int) {
+    val xValue = registry.getValueAtPosition(positionX)
+    val yValue = registry.getValueAtPosition(positionY)
+
+    if (xValue == yValue) {
+        instructionSet.current = instruction
+    } else {
+        instructionSet.current++
+    }
+}
+```
+
+Finally we created a way to do the `jump` function! We add the final tests and fixes to match the other operators of our URM (not included here, so you can do it as homework or cheat seeing the final code):
+
+* `jump` function cannot operate over negative positions (should throw an `IllegalArgumentException`)
+* `jump` function cannot work over empty registers (should throw an `IllegalStateException`)
+
+This was quite easy and we can now move to the next part of our URM implementation.
+
+We have some pending things that we will achieve later:
+
+* The `jump` function has 5 parameters. That's ugly
+* All the functions take a `Registry` as first parameter. We can fix that
+* This is not the final implementation, we will do a lot of refactors as it is part of the cycle of building with TDD
+* `InstructionSet` doesn't have operations and we should add tests if we add them
+* We are still using a stub `Registry`. We need to fix this later to make the tests more trustworthy
+* Tests are living code as well as our project, be open to fix and refactor our tests
+* Some tests fail from time to time because the data is in a wrong state, our `Registry` needs to reset on every test…
+

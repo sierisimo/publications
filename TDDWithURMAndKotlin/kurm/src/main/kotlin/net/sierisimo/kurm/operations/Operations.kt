@@ -40,5 +40,19 @@ fun increment(registry: Registry, position: Int) {
  *
  */
 fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: InstructionSet, instruction: Int) {
-    instructionSet.current = instruction
+    require(positionX > 0) { "Position must be positive number" }
+    require(positionY > 0) { "Position must be positive number" }
+    require(instruction > 0) { "Instruction must be positive number" }
+
+    val xValue = registry.getValueAtPosition(positionX)
+    val yValue = registry.getValueAtPosition(positionY)
+
+    checkNotNull(xValue) { "Register must be initialized" }
+    checkNotNull(yValue) { "Register must be initialized" }
+
+    if (xValue == yValue) {
+        instructionSet.current = instruction
+    } else {
+        instructionSet.current++
+    }
 }
