@@ -47,7 +47,7 @@ Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.
 org.opentest4j.AssertionFailedError: Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.
 ```
 
-This exception tell us what we already know: our function is not throwing the right exception for empty registers. Let's fix that using the contract `checkNotNull` which is available on the kotlin stdlib (I'll write about contracts in another article):
+This exception tells us what we already know: our function is not throwing the right exception for empty registers. Let's fix that by using the contract `checkNotNull` which is available on the `kotlin stdlib` (I'll write about contracts in another article):
 
 ```kotlin
 fun increment(registry: Registry, position: Int){
