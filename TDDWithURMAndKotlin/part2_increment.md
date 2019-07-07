@@ -1,12 +1,12 @@
 # TDD With URM and Kotlin - increment
 
-In the previous article we mentioned a way to start writing our implementation of URM using TDD. We also mentioned a lot of questions that came up while writing the `zero` function.
+[In the previous article](https://dev.to/sierisimo/tdd-with-urm-and-kotlin-1dj7) we mentioned a way to start writing our implementation of URM using TDD. We also mentioned a lot of questions that came up while writing the `zero` function.
 
 Now it's time to write the increment function.
 
 ## Increment function
 
-We know the `increment` function will be `I(x)`, where `x` represents a register in our _Unlimented Register Machine_. We are writing (for now) only the internal that will be used to represent our functionallity.
+We know the `increment` function will be `I(x)`, where `x` represents a register in our _Unlimented Register Machine_. We are writing –for now– only the internal that will be used to represent our functionallity.
 
 Following the same approach we followed for the `zero` function, we start by writing a test on how we expect the function behaves with negative numbers:
 
@@ -28,7 +28,7 @@ fun increment(registry: Registry, position: Int){
 }
 ```
 
-For our second test we need want to validate a "strict" rule: when a register has no value, it cannot be incremented. Our test should represent this and we should put a simple exception for it:
+For our second test, we need to validate a "strict" rule: when a register has no value, it cannot be incremented. Our test should represent this and we should put a simple exception for it:
 
 ```kotlin
 @ParameterizedTest
@@ -40,7 +40,7 @@ fun `increment function cannot work with empty register`(position: Int) {
 }
 ```
 
-If we run our test at this point it will fail:
+If we run our test at this point, it will fail:
 
 ```
 Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.

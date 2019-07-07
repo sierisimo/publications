@@ -274,7 +274,7 @@ fun zeroFunctionThrowsExceptionWithNegativePosition() {
 }
 ```
 
-In this test we check that our function doesn't work with negative positions. But also we state in the test we expect the function to _throw_ an `IllegalArgumentException`. If we run the `gradle check` we will se this test is not passing, but the previous one is.
+In this test we check that our function doesn't work with negative positions. But also we state in the test we expect the function to _throw_ an `IllegalArgumentException`. If we run the `gradle check` we will see this test is not passing, but the previous one is.
 
 We fix the `zero` function adding Kotlin contracts:
 
