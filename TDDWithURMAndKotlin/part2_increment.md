@@ -20,7 +20,7 @@ fun `increment function throws exception with negative position`(position: Int) 
 }
 ```
 
-This initial test is in pro of the defensive model, we first need to be sure the function fails for some invalid cases. We could start with a different part of the code but this is the easiest to write because we already wrote this on the `zero` function:
+This initial test is in pro of the defensive model, so we first need to make sure that the function fails for some invalid cases. We could start with a different part of the code but this is the easiest to write because we already wrote this on the `zero` function:
 
 ```kotlin
 fun increment(registry: Registry, position: Int){
@@ -60,7 +60,7 @@ Now our tests are passing again. Let's write the actual implementation.
 
 ## The real implementation
 
-The test for the real implementation will need a litle more setup. We know that the current approach will throw an expection if our test is just:
+The test for the real implementation will need a little more setup. We know that the current approach will throw an exception if our test is just:
 
 ```kotlin
 @ParameterizedTest
@@ -72,7 +72,7 @@ fun `increment function adds 1 to value of position`(position: Int) {
 }
 ```
 
-This is because we wrote a test that will throw an exception when a registry does not contain a value and someone calls the `increment` function on it. But fortunately we already wrote tests for the `zero` function which means we can initialize our registry before calling increment:
+This is because we wrote a test that will throw an exception when a registry does not contain a value and someone calls the `increment` function on it. But fortunately we already wrote tests for the `zero` function which means we can initialize our registry before calling `increment`:
 
 ```kotlin
 @ParameterizedTest
@@ -100,7 +100,7 @@ fun increment(registry: Registry, position: Int) {
 
 We store the value of `registry.getValueAtPosition(position)` and then call the contract `checkNotNull` (I'll write about contracts soon, I promise!)
 
-But testing with a single `1` is boring… Let's write something that operates over different values. To test dinamycally we will need to check a parameter, then call `increment` and get an expected value. We can simply call `assertEquals(parameter + 1, registry.getValueAtPosition(parameter))` but somehow it feels like cheating…
+But testing with a single `1` is boring… Let's write something that operates over different values. To test dynamically we would need to check a parameter, then call `increment` and get an expected value. We could simply call `assertEquals(parameter + 1, registry.getValueAtPosition(parameter))` but this somehow feels like cheating…
 
 Using _parameterized tests_ from JUnit 5 we can create a single test that will cover different cases in a single method, and we will use `@CsvSource` to pass different parameters. `@CsvSource` takes a group of comma-separated-strings for every set of parameters and our method will ask for this parameters in the appropiate types:
 
@@ -120,9 +120,9 @@ fun `increment function adds 1 to any integer value`(
 }
 ```
 
-This allow the test to be more dynamic and we can add more cases having more flexibility!
+This allows the test to be more dynamic and lets us add more cases having more flexibility!
 
-Let's write one test mixing what we learned:
+Let's write one test mixing what we have learned:
 
 ```kotlin
 @ParameterizedTest
@@ -144,14 +144,14 @@ fun `check zero and increment can work together`(
 }
 ```
 
-Wow! That's a test. We start by setting manually a value on a position. Then we increment it to assert the increment works as expected (we know it does because we have a test to validate it!) and then we do something "new": we reset to 0 a register. We are validating something we didn't check before, that the `zero` function can reset any registry regardless of the value. Finally we `increment` and validate that `increment` works regardless of the value.
+Wow! That's a test. We start by manually setting a value on a position. Then we increment it to assert that the increment works as expected -we know it does because we have a test to validate it!- and then we do something "new": we reset a register to 0. Here we are validating something we didn't check before: that the `zero` function can reset any registry regardless of the value. Finally, we `increment` and validate that `increment` works regardless of the value.
 
 ---
 
 ## Conclusion
 
-We added a new function and also we validate our previous work is not affecting the new work we added. Everything was achieved through writing tests and fixing code!
+We added a new function and also validated that our previous work is not affecting the new code we just added. Everything was achieved through writing tests and fixing code!
 
-There's still things that makes the tests feel like cheating… calling manually `registry.setValueAtPosition` and having a custom implementation for example. We will fix this in the next article where we will talk about mocks!
+There are still things that make the tests feel like cheating… calling manually `registry.setValueAtPosition` and having a custom implementation for example. We will fix this in the next article where we will talk about mocks!
 
 Thanks for reading :)
