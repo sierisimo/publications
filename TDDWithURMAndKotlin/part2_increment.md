@@ -8,7 +8,7 @@ Now it's time to write the increment function.
 
 We know the `increment` function will be `I(x)`, where `x` represents a register in our _Unlimented Register Machine_. We are writing (for now) only the internal that will be used to represent our functionallity.
 
-Following the approach we followed for the `zero` function, we start by writing a test on how we expect the function behaves with negative numbers:
+Following the same approach we followed for the `zero` function, we start by writing a test on how we expect the function behaves with negative numbers:
 
 ```kotlin
 @ParameterizedTest
