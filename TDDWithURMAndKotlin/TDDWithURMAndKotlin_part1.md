@@ -1,12 +1,3 @@
----
-title: TDD with URM + Kotlin: Increment
-published: false
-description: A continuation on the approach to generate a URM interpreter using Kotlin and TDD
-tags: kotlin, tdd
-cover_image:
-series: 
----
-
 # TDD with URM + Kotlin: Increment
 
 In one of my previous articles [I wrote about URM](https://dev.to/sierisimo/my-favorite-computer-theory-to-create-examples-15cn) and how it works. In another one [I mentioned test cases](https://dev.to/sierisimo/unit-testing-with-junit-3mcd) and how to keep ideas for a simple function. Now it's time to wrap up with TDD.

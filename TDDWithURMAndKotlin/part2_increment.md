@@ -1,4 +1,13 @@
-# TDD With URM and Kotlin - increment
+---
+title: TDD with URM + Kotlin: Increment
+published: false
+description: A continuation on the approach to generate a URM interpreter using Kotlin and TDD
+tags: kotlin, tdd
+cover_image:
+series: 
+---
+
+# TDD With URM and Kotlin: Increment
 
 [In the previous article](https://dev.to/sierisimo/tdd-with-urm-and-kotlin-1dj7) we mentioned a way to start writing our implementation of URM using TDD. We also mentioned a lot of questions that came up while writing the `zero` function.
 
