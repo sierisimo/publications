@@ -55,16 +55,16 @@ The first thing we are going to build is the operations for the URM machine to w
 
 The `Z(x)` function will be our first feature to write. The function will take a number that represent a register position and will put a zero on it. We will build this function to be invoked in our code, it should be easy, right? Well… I have some questions:
 
-* Should the function be part of each register like: `register.zero()`?
-  * I dislike this idea, the registers should only now how to store a value, nothing else
-  * This will involve creating an object to represent each register, we don't need that complexity
-* Should the function be part of a bigger object like: `URMinstance.zero()`?
-  * This is a little improvement on where the function will live
-  * This approach has a problem, makes the function to work only with the local group of registers (a.k.a registry) and having kind of knowledge of the implementation
-  * We depend on the existance of `URMinstance` to test the function (not as bad as I want to make it sound)
-* Which parameters should it actually take?
-  * The function should take the position of the register and should know about the group of registers in order to modify it
-  * The function should be agnostic of the way the registry is implemented but still know about how to set a value on it
+- Should the function be part of each register like: `register.zero()`?
+  - I dislike this idea, the registers should only now how to store a value, nothing else
+  - This will involve creating an object to represent each register, we don't need that complexity
+- Should the function be part of a bigger object like: `URMinstance.zero()`?
+  - This is a little improvement on where the function will live
+  - This approach has a problem, makes the function to work only with the local group of registers (a.k.a registry) and having kind of knowledge of the implementation
+  - We depend on the existance of `URMinstance` to test the function (not as bad as I want to make it sound)
+- Which parameters should it actually take?
+  - The function should take the position of the register and should know about the group of registers in order to modify it
+  - The function should be agnostic of the way the registry is implemented but still know about how to set a value on it
 
 With this questions and answers we decide with a simple way of calling our function:
 
@@ -72,9 +72,9 @@ With this questions and answers we decide with a simple way of calling our funct
 zero(registry, position)
 ```
 
-This way the function is not tied to a certain registry, it's not dependant on the inner implementation of the URM, and we can test it without much things involved. 
+This way the function is not tied to a certain registry, it's not dependant on the inner implementation of the URM, and we can test it without much things involved.
 
-### Our initial test 
+### Our initial test
 
 Our first test (in pseudocode) will be something close to:
 
