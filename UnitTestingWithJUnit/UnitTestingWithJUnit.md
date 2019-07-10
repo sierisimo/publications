@@ -1,6 +1,6 @@
 # Unit testing with JUnit
 
-I already explained that [writing tests is not that hard](https://dev.to/sierisimo/testing-is-not-that-hard-54e7) 
+I already explained that [writing tests is not that hard](https://dev.to/sierisimo/testing-is-not-that-hard-54e7)
 but I got some comments about it… I can summarize those comments in just one:
 
 > Where are the code examples?
@@ -58,7 +58,7 @@ First of all we need to focus on valid cases to check the function works as expe
 3. When we pass the number 5 we should get back: `["1","2","Fizz","4","Buzz"]`
 4. When we pass the number 60 we should get back: `["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz", "Fizz", "22", "23", "Fizz", "Buzz", "26", "Fizz", "28", "29", "FizzBuzz", "31", "32", "Fizz", "34", "Buzz", "Fizz", "37", "38", "Fizz", "Buzz", "41", "Fizz", "43", "44", "FizzBuzz", "46", "47", "Fizz", "49", "Buzz", "Fizz", "52", "53", "Fizz", "Buzz", "56", "Fizz", "58", "59", "FizzBuzz"]`
 
-This list can go on and on. For now we are going to stay with these four cases. 
+This list can go on and on. For now we are going to stay with these four cases.
 
 The first thing is to create a class that will hold our tests and set some methods on it to represent our valid cases:
 
@@ -114,7 +114,7 @@ fun whenWePass3TheLastItemIsFizz(){
 }
 ```
 
-The style depends on you and there are even ways to make the displaying more fancy 
+The style depends on you and there are even ways to make the displaying more fancy
 or complex.
 
 Once we have the tests, let's say what parts are involved in each one.
@@ -215,7 +215,7 @@ internal class FizzBuzzTest {
 
 ## Invalid Cases
 
-Testing for the happy path is great and shows that the function works correctly, but we know users don't work like that. They don't follow the happy path, they always try to break our stuff and they send weird stuff to our code. 
+Testing for the happy path is great and shows that the function works correctly, but we know users don't work like that. They don't follow the happy path, they always try to break our stuff and they send weird stuff to our code.
 
 The best thing we can do is to write tests for invalid cases too. The first ones that come to mind are:
 
@@ -248,4 +248,4 @@ This is just a simple introduction on how to write unit tests for a single funct
 
 Once more: Thanks for reading!
 
-(And special thanks to [Jhoon Saravia](https://github.com/jhoon) and [Alejandro Tellez](https://github.com/gambit135) for helping me with grammar and typos) 
+(And special thanks to [Jhoon Saravia](https://github.com/jhoon) and [Alejandro Tellez](https://github.com/gambit135) for helping me with grammar and typos)
