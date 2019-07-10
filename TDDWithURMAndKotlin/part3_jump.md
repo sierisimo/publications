@@ -79,9 +79,9 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: ?, 
 
 Before moving on, we need to define how our `instrcutionSet` will behave or what type of data will be. Things to keep in mind:
 
-* It should hold as much instructions as need it
-* Needs to know which is the current instruction as which one is the next one based on the index
-* Needs to easily change the pointer of execution to any other instruction
+- It should hold as much instructions as need it
+- Needs to know which is the current instruction as which one is the next one based on the index
+- Needs to easily change the pointer of execution to any other instruction
 
 We could need more functionality from the `instructionSet` but having this 3 requirements tell us we need a class and will let us at least write the minimum necessary to fullfill our failing test. First we need to change the test adding a type for `instructionSet`:
 
@@ -160,18 +160,17 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: Ins
 
 Finally we created a way to do the `jump` function! We add the final tests and fixes to match the other operators of our URM (not included here, so you can do it as homework or cheat seeing the final code):
 
-* `jump` function cannot operate over negative positions (should throw an `IllegalArgumentException`)
-* `jump` function cannot work over empty registers (should throw an `IllegalStateException`)
+- `jump` function cannot operate over negative positions (should throw an `IllegalArgumentException`)
+- `jump` function cannot work over empty registers (should throw an `IllegalStateException`)
 
 This was quite easy and we can now move to the next part of our URM implementation.
 
 We have some pending things that we will achieve later:
 
-* The `jump` function has 5 parameters. That's ugly
-* All the functions take a `Registry` as first parameter. We can fix that
-* This is not the final implementation, we will do a lot of refactors as it is part of the cycle of building with TDD
-* `InstructionSet` doesn't have operations and we should add tests if we add them
-* We are still using a stub `Registry`. We need to fix this later to make the tests more trustworthy
-* Tests are living code as well as our project, be open to fix and refactor our tests
-* Some tests fail from time to time because the data is in a wrong state, our `Registry` needs to reset on every test…
-
+- The `jump` function has 5 parameters. That's ugly
+- All the functions take a `Registry` as first parameter. We can fix that
+- This is not the final implementation, we will do a lot of refactors as it is part of the cycle of building with TDD
+- `InstructionSet` doesn't have operations and we should add tests if we add them
+- We are still using a stub `Registry`. We need to fix this later to make the tests more trustworthy
+- Tests are living code as well as our project, be open to fix and refactor our tests
+- Some tests fail from time to time because the data is in a wrong state, our `Registry` needs to reset on every test…
