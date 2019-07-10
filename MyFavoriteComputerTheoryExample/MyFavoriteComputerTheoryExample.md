@@ -14,9 +14,9 @@ The registers in URM work much alike to an infinite sequential number of cells e
 
 To obtain a result of a computable algorithm (or demonstrate it's not computable) **URM** provides us with 3 basic operations. Some books or authors mention a fourth operation, but the fourth operations I have seen on paper are achievable with just the 3 basics ones (names or letters may vary depending on the author):
 
-* `Z(position)` Zero operation. Replaces whatever is in the register at `position` with a 0
-* `I(position)` Increment operation.  Adds 1 to whatever is on the register at `position`. If we are strict… if nothing is at the register it cannot add 1 to it (so you need to invoke `Z(position)` first).
-* `J(positionX, positionY, instruction)` Jump operation. Compares the value of register at `positionX` and `positionY,` when the value is the same continues the execution at `instruction`. Is valid to send a `instruction` out of range, this will indicate the immediate end of the execution
+- `Z(position)` Zero operation. Replaces whatever is in the register at `position` with a 0
+- `I(position)` Increment operation. Adds 1 to whatever is on the register at `position`. If we are strict… if nothing is at the register it cannot add 1 to it (so you need to invoke `Z(position)` first).
+- `J(positionX, positionY, instruction)` Jump operation. Compares the value of register at `positionX` and `positionY,` when the value is the same continues the execution at `instruction`. Is valid to send a `instruction` out of range, this will indicate the immediate end of the execution
 
 ## The Instructions
 
