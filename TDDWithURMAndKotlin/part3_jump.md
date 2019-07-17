@@ -4,7 +4,7 @@ Here we are, once again, trying to build a URM interpreter.
 
 This time we are going to take the hard part, the `jump` function. It should be easy right? Let's remember what the jump function does:
 
-> "It takes two positions as parameters and an instruction number. If the value of registers at positions are equal, then it move execution to the instruction number"
+> "It takes two positions as parameters and an instruction number. If the value of registers at positions are equal, then it moves execution to the instruction number"
 
 #### What?!?
 
@@ -16,7 +16,7 @@ You have the the registry:
 X: [,,4]
 ```
 
-And the instruction:
+And the set of instructions:
 
 ```none
 1: Z(2)
@@ -67,7 +67,7 @@ fun `jump function should move to instruction X when registries are equal`() {
 }
 ```
 
-Wow, that's actually an ugly function. It takes 5 parameters, probably Uncle Bob is looking at us and feeling disappointed… well, we will refactor it later. For now let's see if it works… well, actually we know it doesn't work, as [we see previously](https://dev.to/sierisimo/tdd-with-urm-and-kotlin-1dj7), if we run `gradle check` to run the tests, it will generate a _compile-time error_ because we haven't created the `jump` function yet.
+Wow, that's actually an ugly function. It takes 5 parameters, probably Uncle Bob is looking at us and feeling disappointed… well, we will refactor it later. For now let's see if it works… well, actually we know it doesn't work, as [we have seen previously](https://dev.to/sierisimo/tdd-with-urm-and-kotlin-1dj7), if we run `gradle check` to run the tests, it will generate a _compile-time error_ because we haven't created the `jump` function yet.
 
 Let's fix that:
 
@@ -77,13 +77,13 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: ?, 
 }
 ```
 
-Before moving on, we need to define how our `instrcutionSet` will behave or what type of data will be. Things to keep in mind:
+Before moving on, we need to define how our `instructionSet` will behave or what type of data it will be. Things to keep in mind:
 
-- It should hold as much instructions as need it
-- Needs to know which is the current instruction as which one is the next one based on the index
+- It should hold as many instructions as need it
+- Needs to know which is the current instruction and which one is the next one based on the index
 - Needs to easily change the pointer of execution to any other instruction
 
-We could need more functionality from the `instructionSet` but having this 3 requirements tell us we need a class and will let us at least write the minimum necessary to fullfill our failing test. First we need to change the test adding a type for `instructionSet`:
+We could need more functionality from the `instructionSet` but having these 3 requirements tells us we need a class and that will let us at least write the minimum necessary to fulfill our failing test. First we need to change the test adding a type for `instructionSet`:
 
 ```kotlin
 internal class OperationsTest {
@@ -101,7 +101,7 @@ class InstructionSet {
 }
 ```
 
-We use `var` because we will be setting the value to a different number on every execution of the instruction set. This class just holds data and actually doesn't need to do anything else for our current porpouse. Our test should pass now right? No compile time errors and it's quite straight forward.
+We use `var` because we will be setting the value to a different number on every execution of the instruction set. This class just holds data and actually doesn't need to do anything else for our current purpose. Our test should pass now, right? No compile time errors and it's quite straightforward.
 
 Well, not exactly. If we run the classic: `gradle check` we will get:
 
@@ -119,9 +119,9 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: Ins
 }
 ```
 
-Easy peasy, now the test is passing! You can check by yourself. Please [go on this commit, which contains all of this code to this part and check it by yourself](https://github.com/sierisimo/publications/commit/929e3bb3dfff455fed5dccb51a2f716e5e43ebeb).
+Easy peasy, now the test is passing! You can check it yourself. Please [go to this commit](https://github.com/sierisimo/publications/commit/929e3bb3dfff455fed5dccb51a2f716e5e43ebeb), which contains all the code for this part and check it. It'll be worth it.
 
-At this point you probably are thinking I'm crazy, but I'm not. This is a fair thing happening on TDD, you created a test, you create code to pass the test, let's move on. No one said the implementation is right but the test is passing. We need to test deeper
+At this point you are probably thinking I'm crazy, but I'm not. This is a fair thing happening on TDD: you created a test, then you created code to pass the test, let's move on. No one said the implementation is right but the test is passing. We need to test deeper:
 
 ```kotlin
 @Test
@@ -143,7 +143,7 @@ fun `jump function won't move to instruction X when registries are different`() 
 ```
 
 Now if we `check` the project we will get a failing test! This means our other test was right in the way we wrote it but the implementation of the function is actually wrong. Let's fix that.
-We need to validate that values at registers are equal, only then we update the postion on the `instructionSet`. Otherwise we should just continue execution on the next instruction. Adding the minimum to pass the test our test will pass again:
+We need to validate that values at registers are equal, only then we will update the position on the `instructionSet`. Otherwise we should just continue execution on the next instruction. Adding the minimum to pass the test our test will pass again:
 
 ```kotlin
 fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: InstructionSet, instruction: Int) {
@@ -158,7 +158,7 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: Ins
 }
 ```
 
-Finally we created a way to do the `jump` function! We add the final tests and fixes to match the other operators of our URM (not included here, so you can do it as homework or cheat seeing the final code):
+We finally figured out a way to do the `jump` function! We add the final tests and fixes to match the other operators of our URM (not included here, so you can do it as homework or cheat taking a look at the final code):
 
 - `jump` function cannot operate over negative positions (should throw an `IllegalArgumentException`)
 - `jump` function cannot work over empty registers (should throw an `IllegalStateException`)
