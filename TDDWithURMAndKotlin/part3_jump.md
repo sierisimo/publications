@@ -1,4 +1,9 @@
-# TDD With URM and Kotlin - jump
+---
+title: TDD with URM + Kotlin: Jump 
+published: false
+description: 
+tags: 
+---
 
 Here we are, once again, trying to build a URM interpreter.
 
@@ -158,6 +163,8 @@ fun jump(registry: Registry, positionX: Int, positionY: Int, instructionSet: Ins
 }
 ```
 
+## Conclusion
+
 We finally figured out a way to do the `jump` function! We add the final tests and fixes to match the other operators of our URM (not included here, so you can do it as homework or cheat taking a look at the final code):
 
 - `jump` function cannot operate over negative positions (should throw an `IllegalArgumentException`)
@@ -174,3 +181,4 @@ We have some pending things that we will achieve later:
 - We are still using a stub `Registry`. We need to fix this later to make the tests more trustworthy
 - Tests are living code as well as our project, be open to fix and refactor our tests
 - Some tests fail from time to time because the data is in a wrong state, our `Registry` needs to reset on every test…
+
