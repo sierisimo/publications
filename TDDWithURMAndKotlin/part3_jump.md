@@ -181,4 +181,3 @@ We have some pending things that we will achieve later:
 - We are still using a stub `Registry`. We need to fix this later to make the tests more trustworthy
 - Tests are living code as well as our project, be open to fix and refactor our tests
 - Some tests fail from time to time because the data is in a wrong state, our `Registry` needs to reset on every test…
-
