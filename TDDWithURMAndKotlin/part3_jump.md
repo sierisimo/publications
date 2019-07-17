@@ -1,8 +1,10 @@
 ---
 title: TDD with URM + Kotlin: Jump 
 published: false
-description: 
-tags: 
+description: The next part on the approach to generate a URM interpreter using Kotlin and TDD
+tags: kotlin, tdd
+cover_image:
+series: TDD With URM and Kotlin
 ---
 
 Here we are, once again, trying to build a URM interpreter.
