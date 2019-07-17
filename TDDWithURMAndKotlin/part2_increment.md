@@ -13,9 +13,9 @@ Now it's time to write the increment function.
 
 ## Increment function
 
-We know the `increment` function will be `I(x)`, where `x` represents a register in our _Unlimented Register Machine_. We are writing –for now– only the internal that will be used to represent our functionallity.
+We know that the `increment` function will be `I(x)`, where `x` represents a register in our _Unlimited Register Machine_. We are only writing only the internal that will be used to represent our functionality –for now.
 
-Following the same approach we followed for the `zero` function, we start by writing a test on how we expect the function behaves with negative numbers:
+Following the same approach we used for the `zero` function, we'll start by writing a test on how we expect the function to behave with negative numbers:
 
 ```kotlin
 @ParameterizedTest
@@ -27,7 +27,7 @@ fun `increment function throws exception with negative position`(position: Int) 
 }
 ```
 
-This initial test is in pro of the defensive model, so we first need to make sure that the function fails for some invalid cases. We could start with a different part of the code but this is the easiest to write because we already wrote this on the `zero` function:
+This initial test is in pro of the defensive model, but remember that we first need to make sure that the function fails for some invalid cases. We could start with a different part of the code but this is the easiest to write because we already wrote this on the `zero` function:
 
 ```kotlin
 fun increment(registry: Registry, position: Int){
@@ -35,7 +35,7 @@ fun increment(registry: Registry, position: Int){
 }
 ```
 
-For our second test, we need to validate a "strict" rule: when a register has no value, it cannot be incremented. Our test should represent this and we should put a simple exception for it:
+For our second test, we need to validate a "strict" rule: when a register has no value, it cannot be incremented. Our test should represent this and we should place a simple exception for it:
 
 ```kotlin
 @ParameterizedTest
