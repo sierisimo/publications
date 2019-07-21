@@ -1,6 +1,6 @@
 ---
 title: TDD with URM + Kotlin: Jump 
-published: false
+published: true
 description: The next part on the approach to generate a URM interpreter using Kotlin and TDD
 tags: kotlin, tdd
 cover_image:
