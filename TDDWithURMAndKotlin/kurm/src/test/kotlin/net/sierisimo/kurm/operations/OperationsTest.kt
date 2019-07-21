@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 internal class OperationsTest {
-    val registry = object : Registry {
+    private val registry = object : Registry {
         val positionValueMap = mutableMapOf<Int, Int>()
 
         override fun getValueAtPosition(position: Int): Int? = positionValueMap[position]
@@ -20,7 +20,7 @@ internal class OperationsTest {
         }
     }
 
-    val instructionSet = InstructionSet()
+    private val instructionSet = InstructionSet()
 
     @ParameterizedTest
     @ValueSource(ints = [1, 5, 10, 1000, Int.MAX_VALUE])
@@ -139,7 +139,7 @@ internal class OperationsTest {
     }
 
     @ParameterizedTest
-    @CsvSource("10,23", "15,99", "1000,1100", "12,13", "17,23", "19,29")
+    @CsvSource("10,23,2", "15,99,100", "1000,1100,10", "12,13,5", "17,23,10", "19,29,100")
     fun `jump function throws exception with empty registers`(positionX: Int, positionY: Int, instruction: Int) {
         instructionSet.current = 9
 
