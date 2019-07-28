@@ -1,0 +1,19 @@
+{
+  "name": "even_server_express",
+  "version": "0.0.1",
+  "description": "A server that works in even cases and don't in odd cases",
+  "main": "build/even_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node build/even_server.js"
+  },
+  "author": "Sinuhe Jaime <sierisimo@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "kotlin": "^1.3.41"
+  },
+  "devDependencies": {
+    "kotlin-test": "^1.3.41"
+  }
+}
