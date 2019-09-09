@@ -1,10 +1,10 @@
 ---
 title: The Function that changed my mind
 published: false
-description: How a single function show me a lot of kotlin 
+description: How a single function show me a lot of kotlin
 tags: kotlin,functions,android,refactor
 cover_image:
-series: 
+series:
 ---
 
 When writting code we should always have a place for improvement. Improvement can present itself in different ways or forms. A proof of it is how in recent years the big attention to CI (_Continous Integration_) and CD (_Continous Delivery_) has grown. Same goes for new languages and technologies.
@@ -274,7 +274,7 @@ But still… while codign the `::class.java` is present. Why I have been complai
 
 ## Reified for your types
 
-We are currently having a generic – `<T>` – function that is _inlined_, these two elements can be combined to use a third element on our function: `reified`: 
+We are currently having a generic – `<T>` – function that is _inlined_, these two elements can be combined to use a third element on our function: `reified`:
 
 ```kotlin
 inline fun <reified Ty> Context.launchActivity(Class<T> clazz, confBlock: Intent.() -> Unit) {
