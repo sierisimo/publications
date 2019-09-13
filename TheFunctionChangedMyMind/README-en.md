@@ -1,7 +1,7 @@
 ---
 title: The Function that changed my mind
 published: false
-description: How a single function show me a lot of kotlin
+description: How a single function showed me a lot of Kotlin
 tags: kotlin,functions,android,refactor
 cover_image:
 series:
