@@ -11,7 +11,7 @@ When writting code, we should always have a place for improvement. Improvement c
 
 But not all involve changing to a new language, technology or tool. Some of these improvements are simply changing how something works, adding tests, adding abstractions, changing patterns, etc. This is the case for the change I introduced on one of my projects.
 
-**Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo](https://www.youtube.com/watch?v=0KoXxoPHV4o&feature=youtu.be) or Kotlin/Everywhere Guadalajara and Mexico City.
+**Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo (in spanish)](https://www.youtube.com/watch?v=0KoXxoPHV4o&feature=youtu.be) or Kotlin/Everywhere Guadalajara and Mexico City.
 
 **Another disclaimer**: This article is not about architecture –even when it's a hot topic in the Android community– or best practices or even about how to organize an Android Application. It's just about a set of changes that showed me some Kotlin concepts. Also, I started these changes almost 3 years ago, so by the time this article is published, the libraries from Google –like `core-ktx`– will probably already have something similar or better. And just to be clear: None of the approaches discussed here are right or wrong, all the solutions depend on individual needs and individual reasons to choose them over the others.
 
