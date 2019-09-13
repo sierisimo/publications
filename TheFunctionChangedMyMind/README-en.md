@@ -7,21 +7,21 @@ cover_image:
 series:
 ---
 
-When writting code we should always have a place for improvement. Improvement can present itself in different ways or forms. A proof of it is how in recent years the big attention to CI (_Continous Integration_) and CD (_Continous Delivery_) has grown. Same goes for new languages and technologies.
+When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it is how in recent years the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has grown significantly. Same goes for new languages and technologies.
 
 But not all involve changing to a new language, technology or tool. Some of these improvements are simply changing how something works, adding tests, adding abstractions, changing patterns, etc. This is the case for the change I introduced on one of my projects.
 
 **Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo]() or Kotlin/Everywhere Guadalajara and Mexico City.
 
-**Another disclaimer**: This article is not about architecture –even when it's a hot topic in the Android community– or best practices or even about how to organize an Android Aplication, it's just about a set of changes that showed me some concepts of Kotlin. Also, I started this changes almost 3 years ago, by the point of publication of this article, probably the libraries from Google –like `core-ktx`– already have something similar or better. And just to be clear: None of the approaches discutted here is right or wrong, all the solutions depend on individual needs and individual reasons to choose them over the others.
+**Another disclaimer**: This article is not about architecture –even when it's a hot topic in the Android community– or best practices or even about how to organize an Android Application. It's just about a set of changes that showed me some Kotlin concepts. Also, I started these changes almost 3 years ago, so by the time this article is published, the libraries from Google –like `core-ktx`– will probably already have something similar or better. And just to be clear: None of the approaches discussed here are right or wrong, all the solutions depend on individual needs and individual reasons to choose them over the others.
 
-## But first… some Context
+## But first… some _Context_
 
-If you're an Android Developer or have worked with Android, probably you catch the pun intended in the joke, if not, let me explain you quickly.
+If you're an Android Developer or have worked with Android, you probably caught the pun intended by this title. If not, let me explain it to you quickly.
 
 In Android, everything happening on your application has a `Context` and to make some stuff work, you also need a `Context`. This is just a class that Android uses to give information and access to the app.
 
-One specific case is when you want to start a new `Activity` on your app. This means –in short– launching a new whole screen or launching an external application. To do this, you first create an `Intent` based on your `Context` and pass the `Actiity` class you want to start:
+One specific case is when you want to start a new `Activity` on your app. This means –in short– launching a whole new screen or an external application. To do this, you first create an `Intent` based on your `Context` and pass the `Activity` class you want to start:
 
 ```kotlin
 val myIntent = Intent(context, MyNextActivity::class.java)
@@ -29,7 +29,7 @@ val myIntent = Intent(context, MyNextActivity::class.java)
 
 Then you can start `MyNextActivity` from another `Activity` simply using this intent: `startActivity(myIntent)`
 
-If your application relays on activities for showing different sections/views of your application then probably you will end with a lot of this calls distributed around. In some different variants, but all of them with the same structure:
+If your application relays on activities for showing different sections/views of your application then probably you will end with a lot of these calls distributed around. In some different variants, but all of them with the same structure:
 
 ```kotlin
 val someIntent = Intent(context, SomeActivity::class.java)
@@ -84,7 +84,7 @@ object AppRouter {
 }
 ```
 
-You can add different layers of complexity but this is the base for most solutions: **have a single point for launching/starting new activities**. In my case I always ended having case 1 all around. Having functions here and there seemed like a good solution, until I ended with 120 functions doing almost the same all around, which is not bad but seeing that `::class.java` even inside of different methods really bother me plus seeing 3 or 4 functions inside the same class with almost the same body also feels wrong.
+You can add different layers of complexity but this is the base for most solutions: **have a single point for launching/starting new activities**. In my case, I always ended having case 1 all around. Having functions here and there seemed like a good solution, until I ended with 120 functions doing almost the same all around, which is not bad, but seeing that `::class.java` even inside of different methods really bothered me. Plus, seeing 3 or 4 functions inside the same class with almost the same body also feels wrong.
 
 I wanted a way to remove that, to make that `::class.java` disappear from everywhere and have something more explicit or at least more readable without the 123193 wrapper functions all around.
 
@@ -141,10 +141,10 @@ Cool! We got rid of one parameter, we hide where the magic is happening and made
 
 But wait… _most_? We want **all**, not _most_… also this has other issues:
 
-1. Is not always possible to inherit
+1. It is not always possible to inherit
 2. Not all the classes in need of the code will be a kind of `Activity`
-3. When some class has access to `Activity` it will need to cast in an ugly way
-4. The `::class.java` is still present –ugh, it's ugly–
+3. When some class has access to `Activity` it will need to be cast in an ugly way
+4. `::class.java` is still present –ugh, it's ugly!
 
 For the casting part we will have:
 
@@ -211,7 +211,7 @@ public final class ContextExtensions {
 }
 ```
 
-This is not bad but is a caveat of having Kotlin extension functions and… well, if is only to make things readable, we are not making too much progress, we only removed 1 line of code from our original block of code. What can save us from actually having this on the bytecode and still adding readability to our codebase?
+This is not bad but is a caveat of having Kotlin extension functions and… well, if it is only to make things readable, we are not making too much progress: we only removed 1 line of code from our original block of code. What can save us from actually having this on the bytecode and still adding readability to our codebase?
 
 ## INLINE
 
@@ -230,7 +230,7 @@ Talking about params… what about the `Intent`? We usually pass information bet
 
 ## Lambda with reciever
 
-Because we don't want to increment the size of our parameter list, because the types of parameters can grow and because we don't want to have multiple wrapper functions just for the parameters, we need to find a way to "_configure_" or `Intent` _on demand_.
+Because we don't want to increment the size of our parameter list, because the types of parameters can grow and because we don't want to have multiple wrapper functions just for the parameters, we need to find a way to "_configure_" our `Intent` _on demand_.
 
 The _lambda with reciever_ is one way to fix this. Adding this parameter to our function we can allow each caller to configure during execution of our function the `Intent` and still keep things readable:
 
@@ -242,7 +242,7 @@ inline fun <T> Context.launchActivity(Class<T> clazz, confBlock: Intent.() -> Un
 }
 ```
 
-Adding this last parameter we are saying that our function can take a lambda that will execute in the scope of an `Intent` and can use properties and methods from the `Intent`. This lambda is later used to setup our `Intent` and finally we start the activity with the already configured `Intent`.
+Adding this last parameter we are saying that our function can take a lambda that will execute in the scope of an `Intent` and can use properties and methods from the `Intent` object. This lambda is later used to set up our `Intent` and finally we start the activity with the already configured `Intent`.
 
 This change allows the execution to be something like:
 
@@ -270,7 +270,7 @@ public void onSomeInteraction() {
 
 As you can see, no reference to external classes, no calls to external functions, all living there. This is a good thing, as the code stays simple while coding and has the real meaning when executing.
 
-But still… while codign the `::class.java` is present. Why I have been complaining about this if is something present in Kotlin? Well, the main reason is because this operator and class is not nice, it's quite ugly and also can be confusing. There are more than one way to obtain a `Class<T>` from a class and this one is the easier one. There's a chance for erro using the other ones and they are verbose, not what we are trying to avoid here.
+But still… while coding, the `::class.java` is present. Why have I been complaining about this if it is something present in Kotlin? Well, the main reason is because this operator and class is not nice, it's quite ugly and also can be confusing. There is more than one way to obtain a `Class<T>` from a class and this one is the easier one. There's a chance for error using the other ones and they are verbose, not what we are trying to avoid here.
 
 ## Reified for your types
 
@@ -307,7 +307,7 @@ launchActivity<MyNextActivity> {}
 Some final touches to the signature will make the function even safer and even cooler when being called:
 
 1. Make `T` have a constraint to `Activity` in a way only classes that extend from `Activity` are allowed
-2. Add a default value to the _lambda with reciever_ to allow calls with empty configuration
+2. Add a default value to the _lambda with receiver_ to allow calls with an empty configuration
 
 ```kotlin
 inline fun <reified T: Activity> Context.launchActivity(confBlock: Intent.() -> Unit = {}) {
@@ -315,8 +315,8 @@ inline fun <reified T: Activity> Context.launchActivity(confBlock: Intent.() -> 
 }
 ```
 
-Now our function is cooler than ever, won't add too much to the final bytecode and also will make our code more readable. Wow! We traveled a long way doing a lot of changes to a single piece of code to make things cooler, but not just that, now other people developing along with us can benefit from this improvement as they can simply call our function without having to worry how it works. I have seen even people adding animations, making a way to hold results and transforming data using this kind of functions/approaches. Writting idiomatic Kotlin actually makes you think and develop different and cooler!
+Now our function is cooler than ever, won't add too much to the final bytecode and also will make our code more readable. Wow! We traveled a long way doing a lot of changes to a single piece of code to make things cooler, but not just that, now other people developing along with us can benefit from this improvement as they can simply call our function without having to worry how it works. I have seen even people adding animations, making a way to hold results and transforming data using these kind of functions/approaches. Writing idiomatic Kotlin actually makes you think and develop different and cooler!
 
 ## Conlusion
 
-We can apply this kind of approch by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with reciever. We can create ways to configure more stuff in less steps and this will make our writting of code improving as we are adding tools to our set of _already-vaste_ set of functions and tools on kotlin. Thinking on what is repeated or what can be improved allows us –developers– to discover new worlds and make things cooler and sharper. Don't be scared of the change.
+We can apply this kind of approch by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with receiver. We can create ways to configure more stuff in less steps and this will make our writing of code improve as we will be adding tools to our _already-vast_ set of functions and tools on Kotlin. Thinking about what is repeated or can be improved allows us –the developers– to discover new worlds and make things cooler and sharper. Don't be scared of change.
