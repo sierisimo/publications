@@ -1,6 +1,6 @@
 ---
 title: The Function that changed my mind
-published: false
+published: true
 description: How a single function showed me a lot of Kotlin
 tags: kotlin,functions,android,refactor
 cover_image:
@@ -11,7 +11,7 @@ When writting code, we should always have a place for improvement. Improvement c
 
 But not all involve changing to a new language, technology or tool. Some of these improvements are simply changing how something works, adding tests, adding abstractions, changing patterns, etc. This is the case for the change I introduced on one of my projects.
 
-**Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo]() or Kotlin/Everywhere Guadalajara and Mexico City.
+**Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo](https://www.youtube.com/watch?v=0KoXxoPHV4o&feature=youtu.be) or Kotlin/Everywhere Guadalajara and Mexico City.
 
 **Another disclaimer**: This article is not about architecture –even when it's a hot topic in the Android community– or best practices or even about how to organize an Android Application. It's just about a set of changes that showed me some Kotlin concepts. Also, I started these changes almost 3 years ago, so by the time this article is published, the libraries from Google –like `core-ktx`– will probably already have something similar or better. And just to be clear: None of the approaches discussed here are right or wrong, all the solutions depend on individual needs and individual reasons to choose them over the others.
 
@@ -200,7 +200,7 @@ That's actually cool!
 
 Now whatever `Context` existing around can simply invoke this function without issues, we no longer need wrapper functions but… the `::class.java` has not moved. Arghhh… that thing is making our code look ugly…
 
-And we have a bigger problem… turns out that for this small function, the Kotlin compiler will generate some bytecode that once existing in the JVM will look aproximately –on java– like this:
+And we have a bigger problem… turns out that for this small function, the Kotlin compiler will generate some _bytecode_ that once existing in the JVM will look aproximately –on java– like this:
 
 ```java
 public final class ContextExtensions {
@@ -211,11 +211,11 @@ public final class ContextExtensions {
 }
 ```
 
-This is not bad but is a caveat of having Kotlin extension functions and… well, if it is only to make things readable, we are not making too much progress: we only removed 1 line of code from our original block of code. What can save us from actually having this on the bytecode and still adding readability to our codebase?
+This is not bad but is a caveat of having Kotlin extension functions and… well, if it is only to make things readable, we are not making too much progress: we only removed 1 line of code from our original block of code. What can save us from actually having this on the _bytecode_ and still adding readability to our codebase?
 
 ## INLINE
 
-Adding a single reserved word to our function will make everything cool on the bytecode:
+Adding a single reserved word to our function will make everything cool on the _bytecode_:
 
 ```kotlin
 inline fun <T> Context.launchActivity(Class<T> clazz) {
@@ -255,9 +255,9 @@ fun onSomeInteraction() {
 }
 ```
 
-Also, the warning about `inline` disappears with these changes as the optimization now makes sense. In compile time, the compiler will take the call to our function and replace it with the actual body of the function and replacing the lambda with a local variable. This will increase a little bit the size of our bytecode but gave us more readability for usages.
+Also, the warning about `inline` disappears with these changes as the optimization now makes sense. In compile time, the compiler will take the call to our function and replace it with the actual body of the function and replacing the lambda with a local variable. This will increase a little bit the size of our _bytecode_ but gave us more readability for usages.
 
-The bytecode for this call on Java will look something like:
+The _bytecode_ for this call on Java will look something like:
 
 ```java
 public void onSomeInteraction() {
@@ -284,7 +284,7 @@ inline fun <reified Ty> Context.launchActivity(Class<T> clazz, confBlock: Intent
 }
 ```
 
-Adding this word will means that for every single call of our function, when inlining, the compiler will use the actual type instead of a generic or a super type in the caller. This small change allows us to use the generic inside of our function as a real type, then we can remove the first parameter and replace with the real type:
+Adding this word will means that for every single call of our function, when inlining, the compiler will use the actual type instead of a generic or a super type in the caller –I'll go deeper on `reified` on next articles. This small change allows us to use the generic inside of our function as a real type, then we can remove the first parameter and replace with the real type:
 
 ```kotlin
 inline fun <reified T> Context.launchActivity(confBlock: Intent.() -> Unit) {
@@ -315,7 +315,7 @@ inline fun <reified T: Activity> Context.launchActivity(confBlock: Intent.() -> 
 }
 ```
 
-Now our function is cooler than ever, won't add too much to the final bytecode and also will make our code more readable. Wow! We traveled a long way doing a lot of changes to a single piece of code to make things cooler, but not just that, now other people developing along with us can benefit from this improvement as they can simply call our function without having to worry how it works. I have seen even people adding animations, making a way to hold results and transforming data using these kind of functions/approaches. Writing idiomatic Kotlin actually makes you think and develop different and cooler!
+Now our function is cooler than ever, won't add too much to the final _bytecode_ and also will make our code more readable. Wow! We traveled a long way doing a lot of changes to a single piece of code to make things cooler, but not just that, now other people developing along with us can benefit from this improvement as they can simply call our function without having to worry how it works. I have seen even people adding animations, making a way to hold results and transforming data using these kind of functions/approaches. Writing idiomatic Kotlin actually makes you think and develop different and cooler!
 
 ## Conlusion
 
