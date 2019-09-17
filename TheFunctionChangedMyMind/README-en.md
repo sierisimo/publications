@@ -7,21 +7,21 @@ cover_image:
 series:
 ---
 
-When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it is how in recent years the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has grown significantly. Same goes for new languages and technologies.
+When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it, is the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has  significantly grown in recent years. Same goes for new languages and technologies.
 
-But not all involve changing to a new language, technology or tool. Some of these improvements are simply changing how something works, adding tests, adding abstractions, changing patterns, etc. This is the case for the change I introduced on one of my projects.
+Nevertheless, this doesn't involve changing to a new language, technology, nor tool. Some of these improvements are so simple as changing how something works, i.e. adding tests/abstractions, changing patterns, etc. This is how I have proceeded in several projects I have worked in.
 
-**Disclaimer**: If you know me in person or have been in a meetup with me presenting, there's a big chance you already heard me talking about this, even [on YouTube with the GDG Santo Domingo (in spanish)](https://www.youtube.com/watch?v=0KoXxoPHV4o&feature=youtu.be) or Kotlin/Everywhere Guadalajara and Mexico City.
+**Disclaimer**: Whether you have talked with me in person, or have attended to one of my talks at meetups, it's likely, you already have heard me talking about it, even on [YouTube with the GDG Santo Domingo (in spanish)](https://www.youtube.com/watch?v=0KoXxoPHV4o) or Kotlin/Everywhere Guadalajara and Mexico City.
 
-**Another disclaimer**: This article is not about architecture –even when it's a hot topic in the Android community– or best practices or even about how to organize an Android Application. It's just about a set of changes that showed me some Kotlin concepts. Also, I started these changes almost 3 years ago, so by the time this article is published, the libraries from Google –like `core-ktx`– will probably already have something similar or better. And just to be clear: None of the approaches discussed here are right or wrong, all the solutions depend on individual needs and individual reasons to choose them over the others.
+**Another disclaimer**: This article is not about architecture –even though it's a hot topic in the Android community –, best practices or even about how to organize an Android Application. It's just about a set of changes that showed me some Kotlin concepts. Also, I started to implement this aforementioned strategies almost 3 years ago, therefor by the time this article is published, the libraries from Google –like `core-ktx`– will probably being updated or improved. And just to be clear: It's good to mention that the approaches mentioned in the following lines don't apply to all scenarios nor cases; the solutions mentioned in this article depend on scenarios or needs themselves, besides individual reasons to choose them over the others.
 
 ## But first… some _Context_
 
 If you're an Android Developer or have worked with Android, you probably caught the pun intended by this title. If not, let me explain it to you quickly.
 
-In Android, everything happening on your application has a `Context` and to make some stuff work, you also need a `Context`. This is just a class that Android uses to give information and access to the app.
+In Android development, everything happening on your application has a `Context` and to make some stuff work, you need to deal with a `Context` as well. This is no more than a class that Android uses to provide information and access to the app.
 
-One specific case is when you want to start a new `Activity` on your app. This means –in short– launching a whole new screen or an external application. To do this, you first create an `Intent` based on your `Context` and pass the `Activity` class you want to start:
+One specific case arises at the time it's required to start a new `Activity` on your app. This means -succinctly- launching a whole new screen or an external application. In order to accomplish it, firstly you should create an `Intent` based on your `Context` and pass the `Activity` you would like to launch:
 
 ```kotlin
 val myIntent = Intent(context, MyNextActivity::class.java)
@@ -29,7 +29,7 @@ val myIntent = Intent(context, MyNextActivity::class.java)
 
 Then you can start `MyNextActivity` from another `Activity` simply using this intent: `startActivity(myIntent)`
 
-If your application relays on activities for showing different sections/views of your application then probably you will end with a lot of these calls distributed around. In some different variants, but all of them with the same structure:
+If your application relies on activities for showing varied sections or views of your application, then probably you will end up with a lot of these calls distributed around. All of them with the same structure yet with several variants, such as:
 
 ```kotlin
 val someIntent = Intent(context, SomeActivity::class.java)
@@ -44,7 +44,7 @@ startActivity(
 
 ## My first problem
 
-To be honest, there is no problem with this code. Not at all. But I have seen this happening in a lot of applications, you start having these calls distributed around without control, then you suddenly have 2 or 3 places doing the same, setting the same intent with a different variable name but same parameters and then doing the same call. To solve these, most people usually do one of two things:
+To be honest, there is no problem with this code. Not at all. But I have seen this happening in a lot of applications, firstly you have these calls distributed around without messed around, then you suddenly have 2 or 3 repetitions of the same work in different places, setting the same `Intent` with a different variable name but same parameters and then doing the same call. To solve these, most people usually do one of two things:
 
 1. Wrap it around a single method for each case
 2. Put all under a single class/object and just pass needed parameters for repeated cases
@@ -84,7 +84,7 @@ object AppRouter {
 }
 ```
 
-You can add different layers of complexity but this is the base for most solutions: **have a single point for launching/starting new activities**. In my case, I always ended having case 1 all around. Having functions here and there seemed like a good solution, until I ended with 120 functions doing almost the same all around, which is not bad, but seeing that `::class.java` even inside of different methods really bothered me. Plus, seeing 3 or 4 functions inside the same class with almost the same body also feels wrong.
+You can add several layers of complexity, but this is the base for most solutions: **have a single point for launching/starting new activities**. In my case, I always ended up having case 1 all around. Having functions here and there seemed like a good solution, until I ended with 120 functions doing almost the same all around, which is not bad, but seeing that `::class.java` even inside of different methods really bothered me. Plus, seeing 3 or 4 functions inside the same class with almost the same body also feels wrong.
 
 I wanted a way to remove that, to make that `::class.java` disappear from everywhere and have something more explicit or at least more readable without the 123193 wrapper functions all around.
 
@@ -320,3 +320,5 @@ Now our function is cooler than ever, won't add too much to the final _bytecode_
 ## Conlusion
 
 We can apply this kind of approch by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with receiver. We can create ways to configure more stuff in less steps and this will make our writing of code improve as we will be adding tools to our _already-vast_ set of functions and tools on Kotlin. Thinking about what is repeated or can be improved allows us –the developers– to discover new worlds and make things cooler and sharper. Don't be scared of change.
+
+Special thanks to my friends @annaelizleal, [@jhoon](https://github.com/jhoon) and [Alejandro Tellez](https://github.com/gambit135), they help me a lot with grammar, typos and fixing styles. And special thanks to you for reading.
