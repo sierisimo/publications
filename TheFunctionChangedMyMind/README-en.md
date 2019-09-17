@@ -7,7 +7,7 @@ cover_image:
 series:
 ---
 
-When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it, is the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has  significantly grown in recent years. Same goes for new languages and technologies.
+When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it, is the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has significantly grown in recent years. Same goes for new languages and technologies.
 
 Nevertheless, this doesn't involve changing to a new language, technology, nor tool. Some of these improvements are so simple as changing how something works, i.e. adding tests/abstractions, changing patterns, etc. This is how I have proceeded in several projects I have worked in.
 
