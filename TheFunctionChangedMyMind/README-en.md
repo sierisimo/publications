@@ -7,7 +7,7 @@ cover_image:
 series:
 ---
 
-When writting code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it, is the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has significantly grown in recent years. Same goes for new languages and technologies.
+When writing code, we should always have a place for improvement. Improvement can present itself in different ways. A proof of it, is the attention to CI (_Continuous Integration_) and CD (_Continuous Delivery_) has significantly grown in recent years. Same goes for new languages and technologies.
 
 Nevertheless, this doesn't involve changing to a new language, technology, nor tool. Some of these improvements are so simple as changing how something works, i.e. adding tests/abstractions, changing patterns, etc. This is how I have proceeded in several projects I have worked in.
 
@@ -93,7 +93,7 @@ I wanted a way to remove that, to make that `::class.java` disappear from everyw
 Coming from _Java Land_ and seeing that all my function looked the same with one single parameter changed made me thing: "I can do better thant this". So I did:
 
 ```kotlin
-fun <T> launchActivity(context: Context, Class<T> clazz) {
+fun <T> launchActivity(context: Context, clazz: Class<T>) {
     val intent = Intent(context, clazz)
     startActivity(intent)
 }
@@ -123,7 +123,7 @@ Well, having this **global function** also feels kind of wrong, and almost all t
 
 ```kotlin
 open class BaseLaunchActivity: Activity() {
-    fun <T> launchActivity(Class<T> clazz) {
+    fun <T> launchActivity(clazz: Class<T>) {
         val intent = Intent(this, clazz)
         startActivity(intent)
     }
@@ -160,20 +160,20 @@ Depending on inheritance for this simply functionality seems like producing more
 
 ```kotlin
 interface ActivityLauncher {
-    fun <T> launchActivity(context: Context, Class<T> clazz) {
+    fun <T> launchActivity(context: Context, clazz: Class<T>) {
         val intent = Intent(context, clazz)
         startActivity(intent)
     }
 }
 ```
 
-But we got back to having 2 parametes… BUT on interfaces we can enforce properties:
+But we got back to having 2 parameters… BUT on interfaces we can enforce properties:
 
 ```kotlin
 interface ActivityLauncher {
     val launcherContext: Context
 
-    fun <T> launchActivity(Class<T> clazz) {
+    fun <T> launchActivity(clazz: Class<T>) {
         val intent = Intent(launcherContext, clazz)
         startActivity(intent)
     }
@@ -190,7 +190,7 @@ That's boring!!
 What about a single extension function to remove the dependency over the property?
 
 ```kotlin
-fun <T> Context.launchActivity(Class<T> clazz) {
+fun <T> Context.launchActivity(clazz: Class<T>) {
     val intent = Intent(this, clazz)
     startActivity(intent)
 }
@@ -200,7 +200,7 @@ That's actually cool!
 
 Now whatever `Context` existing around can simply invoke this function without issues, we no longer need wrapper functions but… the `::class.java` has not moved. Arghhh… that thing is making our code look ugly…
 
-And we have a bigger problem… turns out that for this small function, the Kotlin compiler will generate some _bytecode_ that once existing in the JVM will look aproximately –on java– like this:
+And we have a bigger problem… turns out that for this small function, the Kotlin compiler will generate some _bytecode_ that once existing in the JVM will look approximately –on java– like this:
 
 ```java
 public final class ContextExtensions {
@@ -218,24 +218,24 @@ This is not bad but is a caveat of having Kotlin extension functions and… well
 Adding a single reserved word to our function will make everything cool on the _bytecode_:
 
 ```kotlin
-inline fun <T> Context.launchActivity(Class<T> clazz) {
+inline fun <T> Context.launchActivity(clazz: Class<T>) {
     val intent = Intent(this, clazz)
     startActivity(intent)
 }
 ```
 
-But if you are writting this on **AndroidStudio** or **IntelliJ** probably you'll notice a warning explaining that there's no actual optimization from _inlining_ this function. And that's true, `inline` works as an **_SMART-COPY-PASTE_** which mean it will do magic on compile time to paste the body of your function where is being called with actual params and stuff.
+But if you are writing this on **AndroidStudio** or **IntelliJ** probably you'll notice a warning explaining that there's no actual optimization from _inlining_ this function. And that's true, `inline` works as an **_SMART-COPY-PASTE_** which mean it will do magic on compile time to paste the body of your function where is being called with actual params and stuff.
 
 Talking about params… what about the `Intent`? We usually pass information between activities using the `Intent` right? With the current approach is not possible to pass any parameter… let's fix that first and we then can check the warning from the `inline`.
 
-## Lambda with reciever
+## Lambda with receiver
 
 Because we don't want to increment the size of our parameter list, because the types of parameters can grow and because we don't want to have multiple wrapper functions just for the parameters, we need to find a way to "_configure_" our `Intent` _on demand_.
 
-The _lambda with reciever_ is one way to fix this. Adding this parameter to our function we can allow each caller to configure during execution of our function the `Intent` and still keep things readable:
+The _lambda with receiver_ is one way to fix this. Adding this parameter to our function we can allow each caller to configure during execution of our function the `Intent` and still keep things readable:
 
 ```kotlin
-inline fun <T> Context.launchActivity(Class<T> clazz, confBlock: Intent.() -> Unit) {
+inline fun <T> Context.launchActivity(clazz: Class<T>, confBlock: Intent.() -> Unit) {
     val intent = Intent(this, clazz)
     intent.confBlock()
     startActivity(intent)
@@ -277,7 +277,7 @@ But still… while coding, the `::class.java` is present. Why have I been compla
 We are currently having a generic – `<T>` – function that is _inlined_, these two elements can be combined to use a third element on our function: `reified`:
 
 ```kotlin
-inline fun <reified Ty> Context.launchActivity(Class<T> clazz, confBlock: Intent.() -> Unit) {
+inline fun <reified Ty> Context.launchActivity(clazz: Class<T>, confBlock: Intent.() -> Unit) {
     val intent = Intent(this, clazz)
     intent.confBlock()
     startActivity(intent)
@@ -319,6 +319,6 @@ Now our function is cooler than ever, won't add too much to the final _bytecode_
 
 ## Conlusion
 
-We can apply this kind of approch by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with receiver. We can create ways to configure more stuff in less steps and this will make our writing of code improve as we will be adding tools to our _already-vast_ set of functions and tools on Kotlin. Thinking about what is repeated or can be improved allows us –the developers– to discover new worlds and make things cooler and sharper. Don't be scared of change.
+We can apply this kind of approach by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with receiver. We can create ways to configure more stuff in less steps and this will make our writing of code improve as we will be adding tools to our _already-vast_ set of functions and tools on Kotlin. Thinking about what is repeated or can be improved allows us –the developers– to discover new worlds and make things cooler and sharper. Don't be scared of change.
 
 Special thanks to my friends @annaelizleal, [@jhoon](https://github.com/jhoon) and [Alejandro Tellez](https://github.com/gambit135), they help me a lot with grammar, typos and fixing styles. And special thanks to you for reading.
