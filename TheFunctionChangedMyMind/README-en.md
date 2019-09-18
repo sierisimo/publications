@@ -317,7 +317,7 @@ inline fun <reified T: Activity> Context.launchActivity(confBlock: Intent.() -> 
 
 Now our function is cooler than ever, won't add too much to the final _bytecode_ and also will make our code more readable. Wow! We traveled a long way doing a lot of changes to a single piece of code to make things cooler, but not just that, now other people developing along with us can benefit from this improvement as they can simply call our function without having to worry how it works. I have seen even people adding animations, making a way to hold results and transforming data using these kind of functions/approaches. Writing idiomatic Kotlin actually makes you think and develop different and cooler!
 
-## Conlusion
+## Conclusion
 
 We can apply this kind of approach by steps or go directly to other functions on our codebase, one example is the usage of `SharedPreferences` and making the _edition_ do an _auto-apply_ "magically" using the lambda with receiver. We can create ways to configure more stuff in less steps and this will make our writing of code improve as we will be adding tools to our _already-vast_ set of functions and tools on Kotlin. Thinking about what is repeated or can be improved allows us –the developers– to discover new worlds and make things cooler and sharper. Don't be scared of change.
 
