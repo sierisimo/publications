@@ -90,7 +90,7 @@ I wanted a way to remove that, to make that `::class.java` disappear from everyw
 
 ## Generics
 
-Coming from _Java Land_ and seeing that all my function looked the same with one single parameter changed made me thing: "I can do better thant this". So I did:
+Coming from _Java Land_ and seeing that all my function looked the same with one single parameter changed made me thing: "I can do better than this". So I did:
 
 ```kotlin
 fun <T> launchActivity(context: Context, clazz: Class<T>) {
