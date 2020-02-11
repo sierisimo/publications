@@ -171,4 +171,165 @@ fun buildJson(buildBlock: Json.() -> Unit): Json {
 }
 ```
 
-This tells us that now we have to pass a lambda to the function in order to make it work. 
+This tells us that now we have to pass a lambda to the function in order to build the `Json` and also this lambda will have access to the information of the `Json`. In some cases you want to create an intermediate class to remove the mutability of the final object… but we will discuss that approach on a later article.
+
+Now we have the beginning of our DSL.
+
+## Adding inner functions
+
+For every property on our final `Json` we want to allow a call on our DSL to something like: `addProperty` or just `property` to make it more readable, as our function is `buildJson` the `property` function can be understood as adding a new property more than querying.
+
+To make this possible we can create independant functions or simply add them as methods to the `Json` class:
+
+```kotlin
+class Json {
+    fun property(
+        key: String,
+        value: Any? = null
+    ){
+        //Logic to add a property will live here
+    }
+}
+```
+
+This new method inside of the `Json` class allows our DSL to behave in this way:
+
+```kotlin
+buildJson {
+    property(key = "name", value = "Sinuhe")
+}
+```
+
+But this is limited as we cannot do many computations or things in an expressive way. Our DSL should allow the properties to be "dynamic" in a way they are actually calculated. Once again we go with a **lambda with receiver**:
+
+```kotlin
+class Json {
+    fun property(
+        key: String = "",
+        value: Any? = null,
+        propBlock: JsonProperty.() -> Unit = { }
+    ) {
+        val jsonProperty = JsonProperty(key, value)
+        jsonProperty.apply(propBlock)
+        //More logic here for registering the property somewhere
+    }
+}
+
+data class JsonProperty(
+    var key: String,
+    var value: Any?
+)
+```
+
+As you can notice (and not mentioned before), we are adding default values, this means that invocations of our DSL can skip some values in order to let the DSL take the decission for trivial values or implementations:
+
+```kotlin
+//Example 1
+buildJson {
+    property(key = "name", value = "Sinuhe")
+
+    //Also valid:
+    property(key = "") {
+        value = 0
+    }
+
+    property {
+        key = "pwd"
+        value = "Some Complicated password"
+    }
+}
+```
+
+## DSL Should be safer
+
+So far our final `Json` doesn't actually hold or contains any information. We should add some properties to it on each invoke of `property` to keep track of these values:
+
+```kotlin
+class Json {
+    private val properties: MutableMap<String, Any?> = mutableMapOf()
+
+    val keys: Set<String>
+        get() = properties.keys
+
+    fun property(
+            key: String = "",
+            value: Any? = null,
+            propBlock: JsonProperty.() -> Unit = {}
+    ) {
+        val jsonProperty = JsonProperty(key, value)
+        jsonProperty.apply(propBlock)
+
+        properties[jsonProperty.key] = jsonProperty.value
+    }
+}
+```
+
+But now we have something not so cool on our DSL, the DSL can be used like this:
+
+```kotlin
+buildJson {
+    property(key = "name") {
+        value = "Sinuhe"
+
+        println(keys)
+    }
+}
+```
+
+This is a mistake as we don't expect to have access to `keys` which is a property of `Json` inside of the `property` block. This is less readable as we (the owners of the DSL) are aware that `keys` belongs to the top block but the users (maybe us in 2 months or maybe our coworkers or someone using our public library) won't be aware of why `keys` exists here _"why a `property` has keys?_.
+
+To avoid this type of errors, Kotlin provides us with a simple way to let the compiler check if something is available or accessible in a block. We fisrt need to create an annotation marked with `@DslMarker`:
+
+```kotlin
+@DslMarker
+annotation class JsonDSL
+```
+
+To let the Kotlin compiler to check usages of our DSL we need to mark the types (classes and interfaces) involved on our DSL. This check will validate that all **lambdas with receiver** limit their access to just the **receiver**, the rule in case of two or more receiver are involved or even a lambda without receiver is present is that "the top closest one wins" this means the type closest in a top level function allows the access on it's fields to the block. In that way we can hide fields and other functions from inner blocks, this will happen at compile time, making the usages safer.
+
+```kotlin
+@DslMarker
+annotation class JsonDSL
+
+@JsonDSL
+data class JsonProperty(…)
+
+@JsonDSL
+class Json {
+    …
+}
+```
+
+## What's next
+
+From here we can extend our DSL for other operations, common suggestions are to override operators, add extension functions inside of our class, add get/set functions for accessing, etc. to make the DSL even more cool:
+
+```kotlin
+class Json {
+    infix fun String.toValue(value: Any?) {
+        properties[this] = value
+    }
+}
+
+//On the DSL:
+
+buildJson {
+    "lastName" toValue 5
+
+    "innerJson" toValue buildJson {
+
+    }
+}
+```
+
+## Conclusions
+
+There's no specific rules for how to build a DSL or what elements to add. As a DSL is for specific operationgs or rules on a certain domain (as the name says), some rules or naming conventions can differ.
+
+Also notice that designing and building a DSL takes some time so it's a solution in the long term that will make writting code easier for you and the projects using it. The final user of your application/service/software probably won't notice the presence of a DSL but developers will (unless you are writting a library/framework in which case your final users are developers).
+
+There's out there some DSL already built with these techniques that you can check an take inspiration from:
+
+/////////////////////////////////////
+
+Reach me with questions, comments or just to show off your DSLs at @sierisimo in both [Github](https://github.com/sierisimo) and [Twitter](https://twitter.com/sierisimo).
