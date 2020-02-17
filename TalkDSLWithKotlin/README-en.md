@@ -1,6 +1,13 @@
-# Let's talk DSL with Kotlin
+---
+title: Let's talk DSL with Kotlin
+published: true
+description: Let's understand what and how a DSL works on Kotlin
+tags: kotlin,functions,dsl,meta-programming
+cover_image:
+series:
+---
 
-## What's a DSL
+## What is a DSL
 
 A DSL Is one way to wrap common operations that you do or a group of people do frequently.
 
