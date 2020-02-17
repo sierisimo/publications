@@ -9,14 +9,13 @@ series:
 
 ## What is a DSL
 
-A DSL Is one way to wrap common operations that you do or a group of people do frequently.
+A DSL is one way to wrap common operations that you do or a group of people do frequently.
 
-For example you go Every day for coffee and you order the same usually (double espresso with ice in my case), this means you have this common operation that your barista and you already know. So eventually instead of going explicitly saying: "Hey Jhoon, give me double espresso with ice" you simply say: "Hey Jhoon, I'll take the usual". Jhoon and you already know that the usual is a _double espresso with ice_ so you can skip some details and make it easy for both of you to order.
+For example you go every day for coffee and you order the same (double espresso with ice in my case), this means you have this common operation that your barista and you already know. So eventually instead of going explicitly saying: "Hey Jhoon, give me double espresso with ice" you simply say: "Hey Jhoon, I'll take the usual". Jhoon and you already know that the usual is a _double espresso with ice_ so you can skip some details and make it easy for both of you to order.
 
-Another example is ordering some sandwiches in Mexico, instead of asking for: "One with ham, cheese and sausage" you just ask for a "Spanish sandwich". Yes, probably the first time you see this it will seem weird to you, but the thing is that is a simpler way for the sandwich place to know what you want to order. They already have a whole menu based on countries and what ingredients they contain. But maybe you want your sandwich without onions, that's fair some people don't like onions (I personally love them) so you wan say: "A Spanish sandwich without Onions". This means that even when
-the recipe is already defined you can customize part of it.
+Another example is ordering sandwiches in Mexico, instead of asking for: "One with ham, cheese and sausage" you just ask for a "Spanish sandwich". Yes, probably the first time you see this it will seem weird to you, but the thing is that is a simpler way for the sandwich place to know what you want to order. They already have a whole menu based on countries and what ingredients they contain. But maybe you want your sandwich without onions, that's fair some people don't like onions (I personally love them) so you will say: "A Spanish sandwich without Onions". This means that even when the recipe is already defined you can customize part of it.
 
-A DSL is just that, some local way to define something. In our examples, a meal order. In other cases is a configuration, a build definition, a way to create a JSON, a network call, an asynchronous job, etc.
+A DSL is just that, some local way to define (or execute) something. In our examples, a meal order. In other cases is a configuration, a build definition, a way to create a JSON, a network call, an asynchronous job, etc.
 
 DSL makes easier define common operations or complex operations using a locally defined language… actually… DSL means that: _Domain-Specific Language_. So… requesting food to your sandwiches place? That's _Domain-Specific_! as the names only apply to sandwiches places, if you order the same at a pasta restaurant they probably don't get it.
 
@@ -26,7 +25,7 @@ When you are developing something you eventually start repeating things: need a 
 
 And these aren't the only cases, you probably already abstracted the way to achieve this kind of operations: with a function, with some design patterns that make easier the task, with a class wrapping most of the process/logic, etc.
 
-But a DSL goes even further: it adds a quicker way to complete tasks/achieve something in your project without having to worry about the implementation details. This means a coworker, a friend or some contributor to your project could easily start adding functionality using your DSL without knowing what's happening internally. Also if you later decide to change the HTTP library for something lightweight or change the JSON parser or some part of your softwar needs improvement but you don't want to mess with all the usages, you can change internally how your DSL achieve things and keep the DSL the same, so fixing and improving won't affect how others achieve things with the DSL.
+But a DSL goes even further: it adds a quicker way to complete tasks/achieve something in your project without having to worry about the implementation details. This means a coworker, a friend or some contributor to your project could easily start adding functionality using your DSL without knowing what's happening internally. Also if you later decide to change the HTTP library for something lightweight or change the JSON parser or some part of your software needs improvement but you don't want to mess with all the usages, you can change internally how your DSL achieve things and keep the DSL the same, so fixing and improving won't affect how others achieve things with the DSL.
 
 ## Common use case for DSL
 
