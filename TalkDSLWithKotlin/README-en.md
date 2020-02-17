@@ -29,13 +29,13 @@ But a DSL goes even further: it adds a quicker way to complete tasks/achieve som
 
 ## Common use case for DSL
 
-We use some DSL frequently without noticing: RegExp (Regular Expressions), AWK, SQL, CSS, SASS, XML, etc. They are considered DSL as they apply to an specific kind of task. For example, you cannot use a RegExp to open a file or to perform a network call, these aren't things RegExp can do, it's main purpose is to process and search text. As well as you cannot use CSS to process an audio file and add new sounds to it. These examples work on specific, limited, and detailed areas and they work quite well defining a simpler way to achieve their purpose than programming all the logic by ourselves.
+We use some DSL frequently without noticing: _RegExp_ (Regular Expressions), _AWK, SQL, CSS, SASS, XML,_ etc. They are considered DSL as they apply to an specific kind of task. For example, you cannot use a _RegExp_ to open a file or to perform a network call, these aren't things _RegExp_ can do, it's main purpose is to search and process text. As well as you cannot use CSS to process an audio file and add new sounds to it. These examples work on specific, limited, and detailed areas and they work quite well defining a simpler way to achieve their purpose than programming all the logic by ourselves.
 
 You can create a DSL for your project defining a group of functions, data types, classes and resources. They need to provide a way to make some tedious task easier and should be a simpler way to read through code.
 
 Some languages provide easy ways to create DSLs and provide with tools to validate and help your DSLs work properly.
 
-If you're a reading this, I hope you are familiar with Kotlin and you want to take your coding to the next level: write less and do more. Well, let's see how Kotlin helps us building DSLs and validating the information.
+If you're a reading this, I hope you are familiar with Kotlin and you want to take your coding to the next level: write less and do more. Well, let's see how Kotlin helps us building DSLs and validating the information within.
 
 ### Let's see some examples
 
@@ -44,15 +44,15 @@ As mentioned before, we can define a DSL for common tasks, let's take the previo
 #### Create a network call pointing to the image
 
 ```kotlin
-    fetchImage {
-        src = "https://via.placeholder.com/350x150"
+fetchImage {
+    src = "https://via.placeholder.com/350x150"
 
-        onDone { img ->
-            myThumbnail.image = img
-        }
-
-        default = resources.default_thumbnail
+    onDone { img ->
+        myThumbnail.image = img
     }
+
+    default = resources.default_thumbnail
+}
 ```
 
 #### Build a JSON for that login
@@ -155,7 +155,7 @@ This will generate the next html:
 
 Let's create a DSL for creating JSON objects.
 
-## Your first approach
+## Our first approach
 
 We already defined how our DSL will work a few lines above. We know the first thing we will need is a function that will create a Json but also that it will return a `Json` type. Let's define both:
 
@@ -335,6 +335,12 @@ There's no specific rules for how to build a DSL or what elements to add. As a D
 Also notice that designing and building a DSL takes some time so it's a solution in the long term that will make writting code easier for you and the projects using it. The final user of your application/service/software probably won't notice the presence of a DSL but developers will (unless you are writting a library/framework in which case your final users are developers).
 
 There's out there some DSL already built with these techniques that you can check an take inspiration from:
+
+* [Anko](https://github.com/Kotlin/anko) (Deprecated but still something good to read)
+* [Kotlinx.HTML](https://github.com/Kotlin/kotlinx.html)
+* [KTON](https://github.com/Jire/KTON)
+* [Skrape.it](https://github.com/skrapeit/skrape.it)
+* Others not mentioned (but if you give me the links I'll include them)
 
 /////////////////////////////////////
 
