@@ -336,11 +336,11 @@ Also notice that designing and building a DSL takes some time so it's a solution
 
 There's out there some DSL already built with these techniques that you can check an take inspiration from:
 
-* [Anko](https://github.com/Kotlin/anko) (Deprecated but still something good to read)
-* [Kotlinx.HTML](https://github.com/Kotlin/kotlinx.html)
-* [KTON](https://github.com/Jire/KTON)
-* [Skrape.it](https://github.com/skrapeit/skrape.it)
-* Others not mentioned (but if you give me the links I'll include them)
+- [Anko](https://github.com/Kotlin/anko) (Deprecated but still something good to read)
+- [Kotlinx.HTML](https://github.com/Kotlin/kotlinx.html)
+- [KTON](https://github.com/Jire/KTON)
+- [Skrape.it](https://github.com/skrapeit/skrape.it)
+- Others not mentioned (but if you give me the links I'll include them)
 
 /////////////////////////////////////
 
