@@ -94,8 +94,12 @@ Usar `Collectors.toXXX` es el proceso inverso de usar `Collection.stream()`. Est
 
 ## Tipos de retorno
 
-Hasta este punto la única manera de obtener un dato que ya no sea un `Stream` es usando `Collectors` pues la mayoría de operaciones de `Stream` se enfoca en 
+Hasta este punto la única manera de obtener un dato que ya no sea un `Stream` es usando `Collectors` pues la mayoría de operaciones de `Stream` se enfoca en operar los datos del `Stream` y generar un nuevo `Stream` con los resultados de la operación. Sin embargo algunas operaciones no cuentan con un retorno, por ejemplo `forEach` que es una operación que no genera ningún dato. Para poder entender que hace cada operación basta con plantear que hace la operación para poder entender que puede o no retornar, por ejemplo:
+
+> La operación de `findAny` trata de encontrar cualquier elemento que cumpla con la condición del `Predicate` que le pasamos como parámetro. Sin embargo la operación dice que es devuelve un `Optional`. ¿Que pasa cuando no encuentra ningún elemento? ¡Claro, por eso devuelve un `Optional`! porque podría haber casos en que ningún elemento del `Stream` cumpla la condición.
+
+En las clases posteriores haremos un listado mas a detalle y con explicaciones de que tipos de retorno tiene cada operación y entenderemos porque se categorizan como **operaciones finales e intermedias**.
 
 ## Conclusiones
 
-Por ahora hemos entendido que cada operación en un `Stream` consume hasta agotar el `Stream` y lo hace en un objeto no reusable, esto implica que tenemos que decidir en nuestro código cuando un `Stream` es un elemento temporal para una función o cuando realmente una función sera la ultima en tocar los datos del `Stream` mediante el `Stream`. Las siguientes clases y lecturas cubrirán mas a detalle que operaciones 
+Por ahora hemos entendido que cada operación en un `Stream` consume hasta agotar el `Stream` y lo hace en un objeto no reusable, esto implica que tenemos que decidir en nuestro código cuando un `Stream` es un elemento temporal para una función o cuando realmente una función sera la ultima en tocar los datos del `Stream`. Las siguientes clases y lecturas cubrirán mas a detalle las multiples operaciones y como afectan a los datos del `Stream`.
