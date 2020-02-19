@@ -71,7 +71,7 @@ En clases posteriores hablaremos mas a detalle de como identificar una **operaci
 
 Una vez que has agregado operaciones a tu `Stream` de datos, lo mas usual es que llegues a un punto donde ya no puedas trabajar con un `Stream` y necesites enviar tus datos en otro formato, por ejemplo `JSON` o una `List` a base de datos.
 
-Existe una interfaz unica que combina todas las interfaces antes mencionadas y que tiene como única utilidad proveer de una operación para obtener todos los elementos de un `Stream`: `Collector`.
+Existe una interfaz única que combina todas las interfaces antes mencionadas y que tiene como única utilidad proveer de una operación para obtener todos los elementos de un `Stream`: `Collector`.
 
 `Collector<T, A, R>` es una interfaz que tomara datos de tipo `T` del `Stream`, un tipo de dato mutable `A` donde se iran agregando los elementos (mutable implica que podemos cambiar su contenido, como un `LinkedList`) y generara un resultado de tipo `R`.
 
