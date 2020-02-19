@@ -1,10 +1,9 @@
 ---
 title: Java 8 Funcional: Operaciones y Collectors
-published: true
-description: A continuation on the approach to generate a URM interpreter using Kotlin and TDD
-tags: kotlin, tdd
+description: 
+tags: 
 cover_image:
-series: TDD With URM and Kotlin
+series:
 ---
 
 ## Lambdas, operaciones y retornos
@@ -45,8 +44,8 @@ public class PlatziStream<T> implements Stream {
     public Stream<T> filter(Predicate<T> predicate) {
         List<T> filteredData = new LinkedList<>();
         for(T t : data){
-            if(predicate.test(data)){
-                filteredData.add(data);
+            if(predicate.test(t)){
+                filteredData.add(t);
             }
         }
 
