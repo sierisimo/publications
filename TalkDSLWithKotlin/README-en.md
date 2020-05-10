@@ -185,7 +185,7 @@ Now we have the beginning of our DSL.
 
 For every property on our final `Json` we want to allow a call on our DSL to something like: `addProperty` or just `property` to make it more readable, as our function is `buildJson` the `property` function can be understood as adding a new property more than querying.
 
-To make this possible we can create independant functions or simply add them as methods to the `Json` class:
+To make this possible we can create individual functions or simply add them as methods to the `Json` class:
 
 ```kotlin
 class Json {
@@ -227,7 +227,7 @@ data class JsonProperty(
 )
 ```
 
-As you can notice (and not mentioned before), we are adding default values, this means that invocations of our DSL can skip some values in order to let the DSL take the decission for trivial values or implementations:
+As you can notice (and not mentioned before), we are adding default values, this means that invocations of our DSL can skip some values in order to let the DSL take the decision for trivial values or implementations:
 
 ```kotlin
 //Example 1
@@ -284,7 +284,7 @@ buildJson {
 
 This is a mistake as we don't expect to have access to `keys` which is a property of `Json` inside of the `property` block. This is less readable as we (the owners of the DSL) are aware that `keys` belongs to the top block but the users (maybe us in 2 months or maybe our coworkers or someone using our public library) won't be aware of why `keys` exists here _"why a `property` has keys?_.
 
-To avoid this type of errors, Kotlin provides us with a simple way to let the compiler check if something is available or accessible in a block. We fisrt need to create an annotation marked with `@DslMarker`:
+To avoid this type of errors, Kotlin provides us with a simple way to let the compiler check if something is available or accessible in a block. We first need to create an annotation marked with `@DslMarker`:
 
 ```kotlin
 @DslMarker
@@ -330,9 +330,9 @@ buildJson {
 
 ## Conclusions
 
-There's no specific rules for how to build a DSL or what elements to add. As a DSL is for specific operationgs or rules on a certain domain (as the name says), some rules or naming conventions can differ.
+There's no specific rules for how to build a DSL or what elements to add. As a DSL is for specific operations or rules on a certain domain (as the name says), some rules or naming conventions can differ.
 
-Also notice that designing and building a DSL takes some time so it's a solution in the long term that will make writting code easier for you and the projects using it. The final user of your application/service/software probably won't notice the presence of a DSL but developers will (unless you are writting a library/framework in which case your final users are developers).
+Also notice that designing and building a DSL takes some time so it's a solution in the long term that will make writing code easier for you and the projects using it. The final user of your application/service/software probably won't notice the presence of a DSL but developers will (unless you are writing a library/framework in which case your final users are developers).
 
 There's out there some DSL already built with these techniques that you can check an take inspiration from:
 
